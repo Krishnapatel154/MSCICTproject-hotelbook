@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+       
+    <h:head>
+         <title>Admin - Manage User Groups</title>
+    <style>
+         body{
+            font-size: 1.3em;
+            background: #f5f5f5;
+        }
+        table{
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        h3{
+            color:#2b3e50;
+        }
+        a{
+            color: blue;
+        }
+    </style>
+    </h:head>
+    <h:body>
+<h:form>
+    <center>
+        <h3>User Registration</h3>
+
+        <h:messages id="hmsg" layout="list" />
+
+        <table>
+
+            <tr>
+                <td>Username :</td>
+                <td>
+                    <h:inputText id="username"
+                                 value="#{adminCDIbean.username}"
+                                 required="true"
+                                 requiredMessage="Username cannot be empty"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Email :</td>
+                <td>
+                    <h:inputText id="email"
+                                 value="#{adminCDIbean.email}"
+                                 required="true"
+                                 requiredMessage="Email cannot be empty"
+                                 validatorMessage="Invalid email format">
+<!--                        <f:validateRegex pattern=".+@.+\\..+" />-->
+                    </h:inputText>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Password :</td>
+                <td>
+                    <h:inputSecret value="#{adminCDIbean.password}"
+                                   required="true"
+                                   requiredMessage="Password cannot be empty"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Phone :</td>
+                <td>
+                    <h:inputText id="phone"
+                                 value="#{adminCDIbean.phone}"
+                                 required="true"
+                                 requiredMessage="Phone cannot be empty"
+                                 validatorMessage="Phone must contain only digits">
+                        <f:validateRegex pattern="[0-9]+"/>
+                    </h:inputText>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <h:commandButton value="Register"
+                                     action="#{adminCDIbean.registerUser}" />
+                </td>
+            </tr>
+
+        </table>
+
+        <br/>
+        <a href="Login.jsf">Login</a>
+
+    </center>
+</h:form>
+
+</h:body>
+   </html>
