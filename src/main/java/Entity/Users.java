@@ -50,36 +50,38 @@ public class Users implements Serializable {
 //    @Column(name = "group_id")
 //    private Integer groupId;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "username")
     private String username;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "password")
+//    @NotNull
+    @Column(length = 500)
     private String password;
+
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
     @Column(name = "phone")
     private String phone;
-    
+
     @JsonbTransient
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "users")
-private Collection<Booking> bookingCollection;
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Booking> bookingCollection;
+
     @JsonbTransient
     @ManyToOne
-@JoinColumn(name = "group_id", referencedColumnName = "group_id")
-private GroupMaster groupMaster;
-     public Users() {
+    @JoinColumn(name = "group_id", referencedColumnName = "group_id")
+    private GroupMaster groupMaster;
+
+    public Users() {
     }
+
     public Users(Integer userId) {
         this.userId = userId;
     }
@@ -98,14 +100,6 @@ private GroupMaster groupMaster;
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
-//    public Integer getGroupId() {
-//        return groupId;
-//    }
-//
-//    public void setGroupId(Integer groupId) {
-//        this.groupId = groupId;
-//    }
 
     public String getUsername() {
         return username;
@@ -138,7 +132,7 @@ private GroupMaster groupMaster;
     public void setPhone(String phone) {
         this.phone = phone;
     }
-  
+
     public Collection<Booking> getBookingCollection() {
         return bookingCollection;
     }
@@ -146,21 +140,21 @@ private GroupMaster groupMaster;
     public void setBookingCollection(Collection<Booking> bookingCollection) {
         this.bookingCollection = bookingCollection;
     }
-// public GroupMaster getGroupMaster() {
-//        return groupMaster;
-//    }
-//
-//    public void setGroupMaster(GroupMaster groupMaster) {
-//        this.groupMaster = groupMaster;
-//    }
+
+    public GroupMaster getGroupMaster() {
+        return groupMaster;
+    }
+
+    public void setGroupMaster(GroupMaster groupMaster) {
+        this.groupMaster = groupMaster;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (userId != null ? userId.hashCode() : 0);
         return hash;
     }
-
-   
 
     @Override
     public boolean equals(Object object) {
@@ -179,5 +173,5 @@ private GroupMaster groupMaster;
     public String toString() {
         return "Entity.Users[ userId=" + userId + " ]";
     }
-    
+
 }

@@ -50,8 +50,8 @@ public class GroupMaster implements Serializable {
     @Column(name = "group_name")
     private String groupName;
     @JsonbTransient
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "groupMaster")
-private Collection<Users> usersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupMaster")
+    private Collection<Users> usersCollection;
 
     public GroupMaster() {
     }
@@ -88,7 +88,6 @@ private Collection<Users> usersCollection;
 //    public void setUsersCollection(Collection<Users> usersCollection) {
 //        this.usersCollection = usersCollection;
 //    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -113,5 +112,5 @@ private Collection<Users> usersCollection;
     public String toString() {
         return "Entity.GroupMaster[ groupId=" + groupId + " ]";
     }
-    
+
 }

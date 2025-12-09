@@ -1,11 +1,138 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
     <h:head>
-        <title>Facelet Title</title>
+        <title>Login</title>
+
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: "Segoe UI", sans-serif;
+                background: #f6f7f4;
+            }
+
+            .form-container2 {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .form-container2 form {
+                width: 380px;
+                background: white;
+                padding: 32px;
+                border-radius: 18px;
+                box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+                animation: fadeIn 0.4s ease;
+            }
+
+            .form-container2 h2 {
+                text-align: center;
+                margin-bottom: 24px;
+                font-weight: 600;
+                color: #30352f;
+            }
+
+            .form-field input {
+                width: 100%;
+                padding: 12px 14px;
+                font-size: 15px;
+                margin-bottom: 18px;
+                border-radius: 10px;
+                border: 1px solid #ccd0c9;
+                background: #fafafa;
+                outline: none;
+                transition: 0.2s;
+            }
+
+            .form-field input:focus {
+                border-color: #8ca47e;
+                background: #fff;
+                box-shadow: 0 0 0 2px rgba(140,164,126,0.25);
+            }
+
+            .button-row {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-login {
+                width: 100%;
+                padding: 12px;
+                background: #394b3c;
+                color: white;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 10px;
+                border: none;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .btn-login:hover {
+                background: #2f3f32;
+            }
+
+            .reset-btn {
+                background: #8ca47e;
+            }
+
+            .login-error-msg {
+                text-align: center;
+                color: red;
+                margin: 10px 0 15px 0;
+                font-weight: 600;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
     </h:head>
+
     <h:body>
-        welcome  to login
+
+        <div class="form-container2">
+
+            <form method="POST">
+
+                <h2>Login</h2>
+
+                <div class="form-field">
+                    <input type="text" name="username" placeholder="Enter Username"/>
+                </div>
+
+                <div class="form-field">
+                    <input type="password" name="password" placeholder="Enter Password"/>
+                </div>
+
+                <div class="login-error-msg">
+                    <h:outputText value="#{loginBean.errorStatus}"/>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn-login">Login</button>
+                    <button type="reset" class="btn-login reset-btn">Reset</button>
+                </div>
+
+            </form>
+
+        </div>
+
     </h:body>
 </html>

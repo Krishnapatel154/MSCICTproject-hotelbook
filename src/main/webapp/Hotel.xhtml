@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>Hotel</title>
+        <style>
+            .hotel-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 15px;
+                background: white;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            }
+
+            .hotel-header {
+                background: #394b3c;
+                color: white;
+                font-weight: bold;
+                text-align: left;
+                padding: 12px;
+            }
+
+            .hotel-row td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .hotel-row:hover {
+                background: #f0f5f0;
+            }
+
+            .admin-btn {
+                background: #c0392b;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 6px;
+                margin-bottom: 6px;
+                width: 100%;
+            }
+
+            .update-btn {
+                background: #2980b9;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 6px;
+                width: 100%;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="card">
+
+            <h2>All Hotels</h2>
+
+            <h:form>
+                <h:dataTable value="#{adminCDIbean.hotels}" var="hotel"
+                             styleClass="hotel-table"
+                             headerClass="hotel-header"
+                             rowClasses="hotel-row">
+
+                    <h:column>
+                        <f:facet name="header">Hotel Name</f:facet>
+                            #{hotel.hotelName}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">City</f:facet>
+                            #{hotel.city}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Location</f:facet>
+                            #{hotel.location}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Rating</f:facet>
+                            #{hotel.rating}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Description</f:facet>
+                            #{hotel.description}
+                    </h:column>
+
+                    <!-- VIEW ROOMS BUTTON -->
+                    <h:column>
+                        <f:facet name="header">Rooms</f:facet>
+                        <h:commandButton value="View Rooms"
+                                         action="RoomList?faces-redirect=true">
+                            <f:param name="hotelId" value="#{hotel.hotelId}" />
+                        </h:commandButton>
+                    </h:column>
+
+                    <!-- ACTION: DELETE + UPDATE -->
+                    <h:column>
+                        <f:facet name="header">Actions</f:facet>
+
+                        <h:panelGroup rendered="#{adminCDIbean.admin}">
+                            <!-- Delete -->
+                            <h:commandButton value="Delete"
+                                             action="#{adminCDIbean.deleteHotel(hotel.hotelId)}"
+                                             styleClass="admin-btn"
+                                             onclick="return confirm('Are you sure you want to delete this hotel?');"/>
+
+                            <!-- Update -->
+                            <h:commandButton value="Update"
+                                             action="#{adminCDIbean.loadHotelForEdit(hotel.hotelId)}"
+                                             styleClass="update-btn"/>
+                        </h:panelGroup>
+
+                    </h:column>
+
+                </h:dataTable>
+            </h:form>
+
+        </div>
+    </h:body>
+</html>
