@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Hotel Sphere – Hotels</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #f6f7f4;
+        }
+
+        .container {
+            width: 100%;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 32px;
+            font-weight: 600;
+            color: #2f3f32;
+        }
+
+        .card-wrapper {
+            width: 90%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 26px rgba(0,0,0,0.22);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 18px;
+        }
+
+        .hotel-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #30352f;
+        }
+
+        .hotel-desc {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 16px;
+            font-weight: 600;
+            color: #496a48;
+            margin-bottom: 14px;
+        }
+
+        .book-btn, .admin-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .book-btn {
+            background: #394b3c;
+            color: white;
+        }
+
+        .book-btn:hover {
+            background: #2f3f32;
+        }
+
+        .admin-btn {
+            background: #c0392b;
+            color: white;
+        }
+
+        .admin-btn:hover {
+            background: #922b21;
+        }
+
+        .update-btn {
+            background: #2980b9;
+            color: white;
+        }
+
+        .update-btn:hover {
+            background: #1c5980;
+        }
+        
+        
+        .hotel-table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.hotel-header {
+    background: #394b3c;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    padding: 12px;
+}
+
+.hotel-row td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.hotel-row:hover {
+    background: #f0f5f0;
+}
+
+.admin-btn {
+    background: #c0392b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-right: 6px;
+    width: 100%;
+}
+
+.update-btn {
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    width: 100%;
+}
+
+
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>Explore Hotels</h1>
+
+        <h:form>
+    <h:dataTable value="#{adminCDIbean.hotels}" var="hotel"
+                 styleClass="hotel-table"
+                 headerClass="hotel-header"
+                 rowClasses="hotel-row">
+
+        <h:column>
+            <f:facet name="header">Hotel Name</f:facet>
+            #{hotel.hotelName}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">City</f:facet>
+            #{hotel.city}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Location</f:facet>
+            #{hotel.location}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Rating</f:facet>
+            #{hotel.rating}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Description</f:facet>
+            #{hotel.description}
+        </h:column>
+
+        <!-- View Rooms Button -->
+        <h:column>
+            <f:facet name="header">Rooms</f:facet>
+            <h:commandButton value="View Rooms" 
+                 action="#{userCDIbean.viewRooms(hotel.hotelId)}"/>
+                   <f:param name="hotelId" value="#{hotel.hotelId}" />
+        </h:column>
+
+
+    </h:dataTable>
+</h:form>
+
+    </div>
+</h:body>
+</html>

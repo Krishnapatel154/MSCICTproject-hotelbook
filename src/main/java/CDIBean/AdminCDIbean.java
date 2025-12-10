@@ -11,6 +11,8 @@ import Entity.Users;
 import jakarta.ejb.EJB;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -217,9 +219,9 @@ public void setDescription(String description) {
     private Collection<Hotels> hotels;
 
     public Collection<Hotels> getHotels() {
-//        if (hotels == null) {
+      if (hotels == null) {
             hotels = abl.getAllHotel();
-//        }
+      }
         return hotels;
     }
 
@@ -395,6 +397,6 @@ public String deleteRoom(Integer id) {
         return null;
     }
 }
-
+ 
 }
     

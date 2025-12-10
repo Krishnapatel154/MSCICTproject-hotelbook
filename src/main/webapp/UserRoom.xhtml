@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Rooms List</title>
+    <style>
+        body { font-family: "Segoe UI", sans-serif; background: #f6f7f4; margin:0; padding:0; }
+        .container { width: 90%; margin:auto; padding: 40px 0; }
+        .hotel-table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border-radius: 10px; }
+        .hotel-header { background: #394b3c; color: white; font-weight: bold; padding: 12px; }
+        .hotel-row td { padding: 10px; border-bottom: 1px solid #ddd; }
+        .hotel-row:hover { background: #f0f5f0; }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>Rooms for Selected Hotel</h1>
+
+        <h:dataTable value="#{adminCDIbean.rooms}" var="room" styleClass="hotel-table"
+             headerClass="hotel-header" rowClasses="hotel-row">
+    <h:column>
+        <f:facet name="header">Room ID</f:facet>
+        #{room.roomId}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Type</f:facet>
+        #{room.roomType}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Price</f:facet>
+        #{room.roomPrice}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Availability</f:facet>
+        #{room.availability ? 'Available' : 'Booked'}
+    </h:column>
+</h:dataTable>
+
+    </div>
+</h:body>
+</html>
