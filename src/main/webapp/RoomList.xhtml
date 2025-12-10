@@ -1,11 +1,148 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Room
-    </h:body>
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Rooms</title>
+
+    <style>
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .add-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .add-btn:hover {
+            background: #219150;
+        }
+        .room-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .room-header {
+            background: #34495e;
+            color: white;
+            font-weight: bold;
+            text-align: left;
+            padding: 12px;
+        }
+
+        .room-row td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .room-row:hover {
+            background: #eef3f7;
+        }
+
+        .delete-btn {
+            background: #c0392b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            width: 100%;
+        }
+
+        .update-btn {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            width: 100%;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="card">
+
+       <div class="header-row">
+            <h2>All Rooms</h2>
+
+            <h:form>
+                <h:commandButton 
+        value="Add Room" 
+        action="#{adminCDIbean.setPage('AddRoom')}" 
+        styleClass="add-btn"/>
+            </h:form>
+        </div>
+
+        <h:form>
+            <h:dataTable value="#{adminCDIbean.rooms}" var="room"
+                         styleClass="room-table"
+                         headerClass="room-header"
+                         rowClasses="room-row">
+
+                <h:column>
+                    <f:facet name="header">Room Type</f:facet>
+                        #{room.roomType}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Room Price</f:facet>
+                        ₹ #{room.roomPrice}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Availability</f:facet>
+                        #{room.availability ? 'Available' : 'Booked'}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Hotel</f:facet>
+                        #{room.hotels.hotelName}
+                </h:column>
+
+                <!-- ACTION BUTTONS -->
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+
+                    <h:panelGroup rendered="#{adminCDIbean.admin}">
+                        
+                        <!-- DELETE -->
+                        <h:commandButton value="Delete"
+                                         action="#{adminCDIbean.deleteRoom(room.roomId)}"
+                                         styleClass="delete-btn"
+                                         onclick="return confirm('Delete this room?');"/>
+
+                        <!-- UPDATE -->
+                        <h:commandButton value="Update"
+                                         action="#{adminCDIbean.loadRoomForEdit(room.roomId)}"
+                                         styleClass="update-btn"/>
+
+                    </h:panelGroup>
+
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+
+    </div>
+
+</h:body>
 </html>

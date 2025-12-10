@@ -68,6 +68,11 @@ public interface AdminBeanLocal {
     public Collection<Users> getAllUsers();
     public Users findUserById(Integer userId);
    public Collection<Users> getUsersByGroup(Integer groupId);
+
+    public Collection<Rooms> getRoomsByHotelId(Integer filterHotelId);
+   // public Users loginUser(String email, String password);
+
+
     
 }
  

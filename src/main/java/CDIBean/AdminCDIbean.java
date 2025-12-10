@@ -6,11 +6,13 @@ package CDIBean;
 
 import EJB.AdminBeanLocal;
 import Entity.Hotels;
+import Entity.Rooms;
+import Entity.Users;
 import jakarta.ejb.EJB;
 import jakarta.inject.Named;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
@@ -103,10 +105,37 @@ public class AdminCDIbean implements Serializable {
         this.page = p;
         return null;  // Stay on same view, do not navigate
     }
+    // LOGIN FUNCTION (ADMIN / USER REDIRECT)
+//public String login() {
+//
+//    Users u = abl.loginUser(email, password);
+//
+//    if (u == null) {
+//        // Wrong login
+//        return "Login.jsf?faces-redirect=true&error=1";
+//    }
+//
+//    // Save logged user
+//    this.username = u.getUsername();
+//    this.phone = u.getPhone();
+//    this.email = u.getEmail();
+//
+//    int groupId = u.getGroupMaster().getGroupId();
+//
+//    if (groupId == 1) {
+//        // ADMIN
+//        return "AdminDashboard.jsf?faces-redirect=true";
+//    } else {
+//        // NORMAL USER
+//        return "Home.jsf?faces-redirect=true";
+//    }
+//}
+
+    
     //hotel crud
 
     private Integer hotelId;
-    private String hotelName;
+    private String hotelName;                           
     private String location;
     private String city;
     private Float rating;
@@ -114,11 +143,11 @@ public class AdminCDIbean implements Serializable {
 
     private Hotels selectedHotel;
 
-    public Integer getHotelId() {
+    public Integer gethotelId() {
         return hotelId;
     }
 
-    public void setHotelId(Integer hotelId) {
+    public void sethotelId(Integer hotelId) {
         this.hotelId = hotelId;
     }
 
@@ -172,11 +201,12 @@ public void setDescription(String description) {
     public boolean isAdmin() {
         return true;
     }
-
+  
+    
     public String addHotel() {
         try {
             abl.addHotel(hotelName, location, city, rating, description);
-            return "Hotel.jsf?faces-redirect=true";
+            return "AdminDashboard.jsf?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -221,7 +251,7 @@ public void setDescription(String description) {
         try {
             abl.updateHotel(hotelId, hotelName, location, city, rating, description);
              hotels = null;
-            return "Hotel.jsf?faces-redirect=true";
+            return "AdminDashboard.jsf?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -232,12 +262,139 @@ public void setDescription(String description) {
     public String deleteHotel(Integer id) {
         try {
             abl.deleteHotel(id);
-             hotels = null;
-            return "Hotel.jsf?faces-redirect=true";
+            
+            return "AdminDashboard.jsf?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    //Room crud
+private Integer roomId;
+private Integer roomhotelId;   // FIXED (HotelId → hotelId)
+private String roomType;
+private BigDecimal roomPrice;
+private Boolean availability;
+
+public Integer getRoomHotelId() {
+    return roomhotelId;
 }
+
+public void setRoomHotelId(Integer roomHotelId) {
+    this.roomhotelId = roomHotelId;
+}
+
+public Integer getRoomId() {
+    return roomId;
+}
+
+public void setRoomId(Integer roomId) {
+    this.roomId = roomId;
+}
+
+public String getRoomType() {
+    return roomType;
+}
+
+public void setRoomType(String roomType) {
+    this.roomType = roomType;
+}
+
+public BigDecimal getRoomPrice() {
+    return roomPrice;
+}
+
+public void setRoomPrice(BigDecimal roomPrice) {
+    this.roomPrice = roomPrice;
+}
+
+public Boolean getAvailability() {
+    return availability;
+}
+
+public void setAvailability(Boolean availability) {
+    this.availability = availability;
+}
+
+private Rooms selectedRoom;
+
+public Rooms getSelectedRoom() {
+    return selectedRoom;
+}
+
+public void setSelectedRoom(Rooms selectedRoom) {
+    this.selectedRoom = selectedRoom;
+}
+
+// ================== ADD ROOM ==================
+
+public String addRoom() {
+    try {
+        abl.addRoom(roomhotelId, roomType, roomPrice, availability);   // FIXED
+        rooms = null; // reload table
+        return "AdminDashboard.jsf?faces-redirect=true";
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
+// ================== LIST ROOMS ==================
+
+private Collection<Rooms> rooms;
+
+public Collection<Rooms> getRooms() {
+    rooms = abl.getAllRooms();
+    return rooms;
+}
+
+public void setRooms(Collection<Rooms> rooms) {
+    this.rooms = rooms;
+}
+
+// ================== LOAD ROOM FOR EDIT ==================
+
+public String loadRoomForEdit(Integer id) {
+
+    selectedRoom = abl.findRoomById(id);
+
+    if (selectedRoom != null) {
+        this.roomId = selectedRoom.getRoomId();
+        this.roomhotelId  = selectedRoom.getHotels().getHotelId();  // FIXED
+        this.roomType = selectedRoom.getRoomType();
+        this.roomPrice = selectedRoom.getRoomPrice();
+        this.availability = selectedRoom.getAvailability();
+    }
+
+    return "EditRoom.jsf?faces-redirect=true";
+}
+
+// ================== UPDATE ROOM ==================
+
+public String updateRoom() {
+    try {
+        abl.updateRoom(roomId, roomhotelId, roomType, roomPrice, availability);  // FIXED
+        rooms = null; // refresh list
+        return "AdminDashboard.jsf?faces-redirect=true";
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
+// ================== DELETE ROOM ==================
+
+public String deleteRoom(Integer id) {
+    try {
+        abl.deleteRoom(id);
+        rooms = null;
+        return "AdminDashboard.jsf?faces-redirect=true";
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
+}
+    

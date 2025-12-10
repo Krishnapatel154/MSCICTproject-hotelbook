@@ -6,6 +6,27 @@
     <h:head>
         <title>Hotel</title>
         <style>
+             .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .add-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .add-btn:hover {
+            background: #219150;
+        }
             .hotel-table {
                 width: 100%;
                 border-collapse: collapse;
@@ -55,9 +76,18 @@
     </h:head>
     <h:body>
         <div class="card">
-
+      
+            <div class="header-row">
             <h2>All Hotels</h2>
 
+            <h:form>
+                <h:commandButton 
+        value="Add Hotel" 
+        action="#{adminCDIbean.setPage('AddHotel')}" 
+        styleClass="add-btn"/>
+            </h:form>
+        </div>
+            
             <h:form>
                 <h:dataTable value="#{adminCDIbean.hotels}" var="hotel"
                              styleClass="hotel-table"

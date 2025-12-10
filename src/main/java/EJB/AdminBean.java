@@ -1,4 +1,4 @@
-/*
+    /*
      * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
      * Click nbfs://nbhost/SystemFileSystem/Templates/J2EE/EJB40/StatelessEjbClass.java to edit this template
  */
@@ -560,4 +560,26 @@ public class AdminBean implements AdminBeanLocal {
             return Collections.emptyList();
         }
     }
+  
+    @Override
+    public Collection<Rooms> getRoomsByHotelId(Integer filterHotelId) {
+ try {
+        return em.createQuery("SELECT r FROM Rooms r WHERE r.hotels.hotelId = :hid", Rooms.class)
+                .setParameter("hid", filterHotelId)
+                .getResultList();
+    } catch (Exception e) {
+        return Collections.emptyList();
+    }    }
+//    @Override
+//public Users loginUser(String email, String password) {
+//    try {
+//        return em.createQuery("SELECT u FROM Users u WHERE u.email = :email AND u.password = :pass", Users.class)
+//                .setParameter("email", email)
+//                .setParameter("pass", password)
+//                .getSingleResult();
+//    } catch (Exception e) {
+//        return null;
+//    }
+//s}
+
 }

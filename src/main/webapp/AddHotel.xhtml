@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets"
-      xmlns:f="jakarta.faces.core">
-       
- <h:head>
-    <title>User Registration</title>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Add Hotel</title>
 
     <style>
         body {
@@ -17,7 +18,7 @@
         }
 
         .container {
-            width: 450px;
+            width: 480px;
             margin: 60px auto;
             background: white;
             padding: 40px;
@@ -44,7 +45,8 @@
             color: #333;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group textarea {
             width: 92%;
             padding: 12px 15px;
             border-radius: 10px;
@@ -54,7 +56,8 @@
             transition: 0.3s;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group textarea:focus {
             border-color: #4d5b46;
             box-shadow: 0 0 5px rgba(77,91,70,0.3);
         }
@@ -97,68 +100,60 @@
 </h:head>
 
 <h:body>
-    <h:form>
+
+    <h:form enctype="multipart/form-data">
+
         <div class="container">
 
-            <div class="title">User Registration</div>
+            <div class="title">Add New Hotel</div>
 
             <h:messages id="hmsg" layout="list" styleClass="messages" />
 
-            <!-- USERNAME -->
+            <!-- HOTEL NAME -->
             <div class="form-group">
-                <label>Username</label>
-                <h:inputText id="username"
-                             value="#{adminCDIbean.username}"
-                             required="true"
-                             requiredMessage="Username cannot be empty"
-                             styleClass="input" />
+                <label>Hotel Name</label>
+                <h:inputText value="#{adminCDIbean.hotelName}" required="true"
+                             requiredMessage="Hotel name cannot be empty"/>
             </div>
 
-            <!-- EMAIL -->
+            <!-- CITY -->
             <div class="form-group">
-                <label>Email</label>
-                <h:inputText id="email"
-                             value="#{adminCDIbean.email}"
-                             required="true"
-                             requiredMessage="Email cannot be empty"
-                             validatorMessage="Invalid email format"
-                             styleClass="input" />
+                <label>City</label>
+                <h:inputText value="#{adminCDIbean.city}" required="true"
+                             requiredMessage="City cannot be empty"/>
             </div>
 
-            <!-- PASSWORD -->
+            <!-- LOCATION / ADDRESS -->
             <div class="form-group">
-                <label>Password</label>
-                <h:inputSecret value="#{adminCDIbean.password}"
-                               required="true"
-                               requiredMessage="Password cannot be empty"
-                               styleClass="input" />
+                <label>Address</label>
+                <h:inputText value="#{adminCDIbean.location}" required="true"
+                             requiredMessage="Address cannot be empty"/>
             </div>
 
-            <!-- PHONE -->
+            <!-- DESCRIPTION -->
             <div class="form-group">
-                <label>Phone</label>
-                <h:inputText id="phone"
-                             value="#{adminCDIbean.phone}"
-                             required="true"
-                             requiredMessage="Phone cannot be empty"
-                             validatorMessage="Phone must contain only digits"
-                             styleClass="input">
-                    <f:validateRegex pattern="[0-9]+"/>
+                <label>Description</label>
+                <h:inputTextarea value="#{adminCDIbean.description}" rows="4"/>
+            </div>
+
+            <!-- RATING -->
+            <div class="form-group">
+                <label>Rating</label>
+                <h:inputText value="#{adminCDIbean.rating}" required="true">
+                    <f:convertNumber type="number" minFractionDigits="0" maxFractionDigits="1"/>
                 </h:inputText>
             </div>
 
             <!-- SUBMIT BUTTON -->
-            <h:commandButton value="Register"
-                             action="#{adminCDIbean.registerUser}"
+            <h:commandButton value="Save Hotel"
+                             action="#{adminCDIbean.addHotel}"
                              styleClass="btn" />
 
-            <!-- LINKS -->
-            <div class="links">
-                <a href="Login.jsf">Login</a>
-                <a href="Home.jsf">Home</a>
-            </div>
+     
 
         </div>
+
     </h:form>
+
 </h:body>
-   </html>
+</html>

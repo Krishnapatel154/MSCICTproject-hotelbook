@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Add Room</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: #f0f2f5;
+        }
+
+        .container {
+            width: 480px;
+            margin: 60px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #2d3c2a;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 92%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #4d5b46;
+            box-shadow: 0 0 5px rgba(77,91,70,0.3);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 5px;
+            font-size: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #4d5b46;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #2d3c2a;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <h:form>
+
+        <div class="container">
+
+            <div class="title">Add New Room</div>
+
+            <h:messages style="color:red; margin-bottom:15px;" />
+
+            <!-- HOTEL name -->
+           <div class="form-group">
+    <label>Select Hotel</label>
+    <h:selectOneMenu value="#{adminCDIbean.roomHotelId}" required="true"
+                     requiredMessage="Please select a hotel">
+        <f:selectItem itemLabel="-- Select Hotel --" itemValue="" />
+        <f:selectItems value="#{adminCDIbean.hotels}" var="h"
+                       itemValue="#{h.hotelId}" itemLabel="#{h.hotelName}" />
+    </h:selectOneMenu>
+</div>
+
+
+            <!-- ROOM TYPE -->
+            <div class="form-group">
+                <label>Room Type</label>
+                <h:inputText value="#{adminCDIbean.roomType}" required="true"
+                             requiredMessage="Room type cannot be empty"/>
+            </div>
+
+            <!-- ROOM PRICE -->
+            <div class="form-group">
+                <label>Room Price</label>
+                <h:inputText value="#{adminCDIbean.roomPrice}" required="true">
+                    <f:convertNumber />
+                </h:inputText>
+            </div>
+
+            <!-- AVAILABILITY -->
+            <div class="form-group">
+                <label>Availability</label>
+                <div class="checkbox-group">
+                    <h:selectBooleanCheckbox value="#{adminCDIbean.availability}" />
+                    <span>Available</span>
+                </div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <h:commandButton value="Save Room"
+                             action="#{adminCDIbean.addRoom}"
+                             styleClass="btn" />
+
+        </div>
+
+    </h:form>
+
+</h:body>
+</html>
