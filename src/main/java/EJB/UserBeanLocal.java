@@ -7,6 +7,7 @@ package EJB;
 import Entity.Booking;
 import Entity.Payment;
 import Entity.Rooms;
+import Entity.Users;
 import jakarta.ejb.Local;
 import java.util.Collection;
 
@@ -28,4 +29,7 @@ public interface UserBeanLocal {
     // Search rooms
    public Collection<Rooms> searchRoomsByHotel(Integer hotelId);
    public Rooms findRoomById(Integer roomId);
+   
+public Users findUserByUsernamePassword(String username, String password);
+
 }

@@ -64,6 +64,7 @@ public class Rooms implements Serializable {
     @JsonbTransient
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "rooms")
     private Collection<Booking> bookingCollection;
+    
      @JsonbTransient   
      @ManyToOne
      @JoinColumn(name="hotel_id",referencedColumnName="hotel_id")

@@ -8,6 +8,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
@@ -50,6 +51,13 @@ public class UserCDIbean implements Serializable {
    private java.util.Date checkInDate;
 private java.util.Date checkOutDate;
 
+  @PostConstruct
+    public void init() {
+        // Agar user login session me hai
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
+        this.loginUserId = (Integer) session.getAttribute("userId");
+    }
 
     // ================== LOGIN USER ID SET ===================
     public Integer getLoginUserId() {
@@ -104,7 +112,8 @@ public void setCheckOutDate(java.util.Date checkOutDate) {
     public String confirmBooking() {
     java.sql.Date cin = new java.sql.Date(checkInDate.getTime());
     java.sql.Date cout = new java.sql.Date(checkOutDate.getTime());
-
+  System.out.println("USER ID = " + loginUserId);
+    System.out.println("ROOM ID = " + bookingRoomId );
     ubl.createBooking(loginUserId, bookingRoomId, cin, cout);
 
     return "UserPayment.jsf?faces-redirect=true";

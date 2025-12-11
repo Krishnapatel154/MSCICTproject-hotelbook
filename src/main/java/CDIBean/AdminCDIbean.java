@@ -376,39 +376,5 @@ public String deleteRoom(Integer id) {
     }
 }
 
- @EJB
-    UserBeanLocal ubl;
-
-    private Date checkIn;
-    private Date checkOut;
-
-    public Date getCheckIn() { return checkIn; }
-    public void setCheckIn(Date checkIn) { this.checkIn = checkIn; }
-
-    public Date getCheckOut() { return checkOut; }
-    public void setCheckOut(Date checkOut) { this.checkOut = checkOut; }
-
-    public String bookRoom() {
-        try {
-            Integer userId = (Integer) FacesContext.getCurrentInstance()
-                    .getExternalContext().getSessionMap().get("userId");
-
-            UserCDIbean ubean = (UserCDIbean) FacesContext.getCurrentInstance()
-                    .getApplication().evaluateExpressionGet(
-                            FacesContext.getCurrentInstance(),
-                            "#{userCDIbean}", UserCDIbean.class);
-
-            Integer roomId = ubean.getBookingRoomId();
-
-            ubl.createBooking(userId, roomId, checkIn, checkOut);
-
-            return "UserPayment.jsf?faces-redirect=true";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
- 
 }
     

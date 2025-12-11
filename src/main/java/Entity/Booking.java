@@ -35,7 +35,11 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "Booking.findAll", query = "SELECT b FROM Booking b"),
     @NamedQuery(name = "Booking.findByBookingId", query = "SELECT b FROM Booking b WHERE b.bookingId = :bookingId"),
-   // @NamedQuery(name = "Booking.findByUserId", query = "SELECT b FROM Booking b WHERE b.userId = :userId"),
+ @NamedQuery(
+    name = "Booking.findByUserId",
+    query = "SELECT b FROM Booking b WHERE b.users.userId = :userId"
+)
+,
  //   @NamedQuery(name = "Booking.findByRoomId", query = "SELECT b FROM Booking b WHERE b.roomId = :roomId"),
     @NamedQuery(name = "Booking.findByCheckInDate", query = "SELECT b FROM Booking b WHERE b.checkInDate = :checkInDate"),
     @NamedQuery(name = "Booking.findByCheckOutDate", query = "SELECT b FROM Booking b WHERE b.checkOutDate = :checkOutDate"),

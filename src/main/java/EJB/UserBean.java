@@ -123,4 +123,21 @@ public class UserBean implements UserBeanLocal {
     public Rooms findRoomById(Integer roomId) {
     return em.find(Rooms.class, roomId);
     }
+    
+   @Override
+public Users findUserByUsernamePassword(String username, String password) {
+    try {
+        return em.createQuery(
+            "SELECT u FROM Users u WHERE u.username = :uname AND u.password = :pass",
+            Users.class
+        )
+        .setParameter("uname", username)
+        .setParameter("pass", password)
+        .getSingleResult();
+    } catch (Exception e) {
+        return null;
+    }
+}
+
+
 }
