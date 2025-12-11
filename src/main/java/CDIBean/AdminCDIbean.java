@@ -5,6 +5,7 @@
 package CDIBean;
 
 import EJB.AdminBeanLocal;
+import EJB.UserBeanLocal;
 import Entity.Hotels;
 import Entity.Rooms;
 import Entity.Users;
@@ -15,6 +16,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Collection;
 
 /**
@@ -107,31 +109,7 @@ public class AdminCDIbean implements Serializable {
         this.page = p;
         return null;  // Stay on same view, do not navigate
     }
-    // LOGIN FUNCTION (ADMIN / USER REDIRECT)
-//public String login() {
-//
-//    Users u = abl.loginUser(email, password);
-//
-//    if (u == null) {
-//        // Wrong login
-//        return "Login.jsf?faces-redirect=true&error=1";
-//    }
-//
-//    // Save logged user
-//    this.username = u.getUsername();
-//    this.phone = u.getPhone();
-//    this.email = u.getEmail();
-//
-//    int groupId = u.getGroupMaster().getGroupId();
-//
-//    if (groupId == 1) {
-//        // ADMIN
-//        return "AdminDashboard.jsf?faces-redirect=true";
-//    } else {
-//        // NORMAL USER
-//        return "Home.jsf?faces-redirect=true";
-//    }
-//}
+   
 
     
     //hotel crud
@@ -397,6 +375,40 @@ public String deleteRoom(Integer id) {
         return null;
     }
 }
+
+ @EJB
+    UserBeanLocal ubl;
+
+    private Date checkIn;
+    private Date checkOut;
+
+    public Date getCheckIn() { return checkIn; }
+    public void setCheckIn(Date checkIn) { this.checkIn = checkIn; }
+
+    public Date getCheckOut() { return checkOut; }
+    public void setCheckOut(Date checkOut) { this.checkOut = checkOut; }
+
+    public String bookRoom() {
+        try {
+            Integer userId = (Integer) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSessionMap().get("userId");
+
+            UserCDIbean ubean = (UserCDIbean) FacesContext.getCurrentInstance()
+                    .getApplication().evaluateExpressionGet(
+                            FacesContext.getCurrentInstance(),
+                            "#{userCDIbean}", UserCDIbean.class);
+
+            Integer roomId = ubean.getBookingRoomId();
+
+            ubl.createBooking(userId, roomId, checkIn, checkOut);
+
+            return "UserPayment.jsf?faces-redirect=true";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
  
 }
     

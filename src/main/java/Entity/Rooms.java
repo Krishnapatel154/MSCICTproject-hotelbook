@@ -34,7 +34,11 @@ import java.util.Collection;
 @NamedQueries({
     @NamedQuery(name = "Rooms.findAll", query = "SELECT r FROM Rooms r"),
     @NamedQuery(name = "Rooms.findByRoomId", query = "SELECT r FROM Rooms r WHERE r.roomId = :roomId"),
-//    @NamedQuery(name = "Rooms.findByHotelId", query = "SELECT r FROM Rooms r WHERE r.hotelId = :hotelId"),
+// @NamedQuery(name = "Rooms.findByHotelId", query = "SELECT r FROM Rooms r WHERE r.hotelId = :hotelId"),
+    @NamedQuery(
+    name = "Rooms.findByHotelId",
+    query = "SELECT r FROM Rooms r WHERE r.hotels.hotelId = :hotelId"
+),
     @NamedQuery(name = "Rooms.findByRoomType", query = "SELECT r FROM Rooms r WHERE r.roomType = :roomType"),
     @NamedQuery(name = "Rooms.findByRoomPrice", query = "SELECT r FROM Rooms r WHERE r.roomPrice = :roomPrice"),
     @NamedQuery(name = "Rooms.findByAvailability", query = "SELECT r FROM Rooms r WHERE r.availability = :availability")})

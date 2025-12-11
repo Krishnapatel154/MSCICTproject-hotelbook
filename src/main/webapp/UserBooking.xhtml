@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Room Booking</title>
+    <style>
+        body { font-family: "Segoe UI"; background: #eef2ec; }
+        .card { width: 40%; margin:auto; padding:30px; background:white;
+                border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.1); }
+        .btn {
+            background:#394b3c; color:white; padding:8px 20px;
+            border:none; border-radius:6px; cursor:pointer;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="card">
+        <h2>Book Room</h2>
+
+        <h:form>
+    <h:panelGrid columns="2">
+
+        <h:outputLabel value="Room ID:" />
+        <h:outputText value="#{userCDIbean.bookingRoomId}" />
+
+        <h:outputLabel value="User ID:" />
+        <h:outputText value="#{userCDIbean.loginUserId}" />
+
+        <h:outputLabel value="Check-in Date:" />
+        <h:inputText value="#{userCDIbean.checkInDate}" type="date" required="true">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+
+        <h:outputLabel value="Check-out Date:" />
+        <h:inputText value="#{userCDIbean.checkOutDate}" type="date" required="true">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+
+    </h:panelGrid>
+
+    <h:commandButton value="Confirm Booking"
+                     action="#{userCDIbean.confirmBooking}"/>
+</h:form>
+
+    </div>
+
+</h:body>
+</html>
