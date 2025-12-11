@@ -1,17 +1,20 @@
 package CDIBean;
 
+import EJB.AdminBeanLocal;
 import EJB.UserBeanLocal;
+import Entity.Booking;
 import Entity.Rooms;
-import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collection;
+
 
 @Named(value = "userCDIbean")
 @SessionScoped
@@ -20,6 +23,8 @@ public class UserCDIbean implements Serializable {
     @EJB
     UserBeanLocal ubl;
 
+    @EJB
+    AdminBeanLocal abl;
     private Collection<Rooms> rooms;   // stores filtered rooms of selected hotel
     private Integer selectedHotelId;
     private Integer bookingRoomId;
@@ -32,8 +37,8 @@ public class UserCDIbean implements Serializable {
         rooms = ubl.searchRoomsByHotel(hotelId);
 
         System.out.println("ROOMS FOUND = " + (rooms != null ? rooms.size() : 0));
-
-        return "UserRoom.jsf?faces-redirect=true";
+        
+    return "UserRoom.jsf?faces-redirect=true&hotelId=" + hotelId;
     }
 
     public Collection<Rooms> getRooms() {
@@ -43,82 +48,148 @@ public class UserCDIbean implements Serializable {
         return selectedHotelId;
     }
       
-//booking
-      
-      private Integer loginUserId; 
+      //book btn 
+      // ------------------------------
+    // PAYMENT VARIABLES
+    // ------------------------------
+    private Integer selectedRoomId;
+    private Integer userId;
+    private String paymentMode;
+    private String loggedInUser;
+    
+//    private Date checkIn;
+//    private Date checkOut;
+    
+    
+
+public Integer getBookingRoomId() { return bookingRoomId; }
+public void setBookingRoomId(Integer bookingRoomId) { this.bookingRoomId = bookingRoomId; }
+
+//public Date getCheckIn() { return checkIn; }
+//public void setCheckIn(Date checkIn) { this.checkIn = checkIn; }
+//
+//public Date getCheckOut() { return checkOut; }
+//public void setCheckOut(Date checkOut) { this.checkOut = checkOut; }
+
+// ------------------------------
+// DATE FIELDS (use java.util.Date ONLY)
+// ------------------------------
+private java.util.Date checkIn;
+private java.util.Date checkOut;
+
+public java.util.Date getCheckIn() { return checkIn; }
+public void setCheckIn(java.util.Date checkIn) { this.checkIn = checkIn; }
+
+public java.util.Date getCheckOut() { return checkOut; }
+public void setCheckOut(java.util.Date checkOut) { this.checkOut = checkOut; }
 
 
-   private java.util.Date checkInDate;
-private java.util.Date checkOutDate;
-
-  @PostConstruct
-    public void init() {
-        // Agar user login session me hai
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
-        this.loginUserId = (Integer) session.getAttribute("userId");
-    }
-
-    // ================== LOGIN USER ID SET ===================
-    public Integer getLoginUserId() {
-        return loginUserId;
-    }
-
-    public void setLoginUserId(Integer loginUserId) {
-        this.loginUserId = loginUserId;
+    // ------------------------------
+    // GETTERS & SETTERS
+    // ------------------------------
+    public Integer getSelectedRoomId() {
+        return selectedRoomId;
     }
 
     
-    // ================== ROOMS LIST BY HOTEL ===================
-    public void loadRoomsByHotel(Integer hotelId) {
-        rooms = ubl.searchRoomsByHotel(hotelId);
+
+    public Integer getUserId() {
+        return userId;
     }
 
-
-    // =============== STORE SELECTED ROOM ID ===================
-    public Integer getBookingRoomId() {
-        return bookingRoomId;
+    public String getPaymentMode() {
+        return paymentMode;
     }
 
-    public void setBookingRoomId(Integer bookingRoomId) {
-        this.bookingRoomId = bookingRoomId;
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
     }
+      public String goToBooking(Integer roomId) {
+    this.bookingRoomId = roomId;
+    return "UserBooking.jsf?faces-redirect=true";
+}
+      //booking page
+      
+      private Integer selectedBookingId;
 
-    // =============== WHEN USER CLICKS BOOK ===================
-    public String goToBooking(Integer roomId) {
-        this.bookingRoomId = roomId;  
-        return "UserBooking.jsf?faces-redirect=true";
+public Integer getSelectedBookingId() { return selectedBookingId; }
+
+    public String bookRoomAndGoToPayment(Integer roomId, Integer hotelId) {
+    try {
+//        if (loggedInUser == null) {
+//            FacesContext.getCurrentInstance().addMessage(null,
+//                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+//                "Please login first", null));
+//            return null;
+//        }
+
+        // Convert util.Date → sql.Date
+        java.sql.Date sqlCheckIn = new java.sql.Date(checkIn.getTime());
+        java.sql.Date sqlCheckOut = new java.sql.Date(checkOut.getTime());
+
+        // 1️⃣ Insert booking into DB
+        abl.addBooking(
+            17,
+            roomId,
+            sqlCheckIn,
+            sqlCheckOut,
+            "SUCCESS"
+        );
+
+        // 2️⃣ Get bookingId of last inserted booking  
+        //     You already have EJB method: getAllBookings()
+        Integer bookingId = abl.getAllBookings()
+                               .stream()
+                               .map(b -> b.getBookingId())
+                               .max(Integer::compare)
+                               .orElse(null);
+
+        // 3️⃣ Store these in session bean
+        this.selectedRoomId = roomId;
+        this.selectedHotelId = hotelId;
+        this.userId = 17;
+        this.selectedBookingId = bookingId;
+
+        System.out.println("Booking inserted: " + bookingId);
+        
+        // 4️⃣ Redirect to payment page
+        return "UserPayment.jsf?faces-redirect=true";
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        FacesContext.getCurrentInstance().addMessage(null,
+            new FacesMessage(FacesMessage.SEVERITY_ERROR,
+            "Booking Failed", null));
+        return null;
     }
-
-    // =============== DATES ===================
-   public java.util.Date getCheckInDate() {
-    return checkInDate;
 }
 
-public void setCheckInDate(java.util.Date checkInDate) {
-    this.checkInDate = checkInDate;
-}
+    //final payment
+    
+    public String processPayment() {
 
-public java.util.Date getCheckOutDate() {
-    return checkOutDate;
-}
+        try {
+            System.out.println("Processing payment...");
+            System.out.println("Room: " + selectedRoomId);
+            System.out.println("User: " + userId);
+            System.out.println("Mode: " + paymentMode);
 
-public void setCheckOutDate(java.util.Date checkOutDate) {
-    this.checkOutDate = checkOutDate;
-}
+            // This will insert payment into DB  
+            abl.addPayment(
+                selectedBookingId,  // bookingId (temporary)
+                new BigDecimal("1500"),  // amount (temporary)
+                new java.sql.Date(System.currentTimeMillis()),
+                paymentMode,
+                "SUCCESS"
+            );
 
+            return "Paymentsuccess.jsf?faces-redirect=true";
 
-    // =============== CONFIRM BOOKING ===================
-    public String confirmBooking() {
-    java.sql.Date cin = new java.sql.Date(checkInDate.getTime());
-    java.sql.Date cout = new java.sql.Date(checkOutDate.getTime());
-  System.out.println("USER ID = " + loginUserId);
-    System.out.println("ROOM ID = " + bookingRoomId );
-    ubl.createBooking(loginUserId, bookingRoomId, cin, cout);
-
-    return "UserPayment.jsf?faces-redirect=true";
-}
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
    
 }

@@ -570,16 +570,37 @@ public class AdminBean implements AdminBeanLocal {
     } catch (Exception e) {
         return Collections.emptyList();
     }    }
-//    @Override
-//public Users loginUser(String email, String password) {
-//    try {
-//        return em.createQuery("SELECT u FROM Users u WHERE u.email = :email AND u.password = :pass", Users.class)
-//                .setParameter("email", email)
-//                .setParameter("pass", password)
-//                .getSingleResult();
-//    } catch (Exception e) {
-//        return null;
-//    }
-//s}
+
+    @Override
+    public Integer processPayment(Integer userId, Integer roomId, String paymentMode) {
+         Users u = em.find(Users.class, userId);
+    Rooms r = em.find(Rooms.class, roomId);
+
+    if (u == null) throw new IllegalArgumentException("Invalid User ID");
+    if (r == null) throw new IllegalArgumentException("Invalid Room ID");
+
+    // 1. Create Booking
+    Booking b = new Booking();
+    b.setUsers(u);
+    b.setRooms(r);
+    b.setCheckInDate(new java.sql.Date(System.currentTimeMillis()));
+    b.setCheckOutDate(new java.sql.Date(System.currentTimeMillis()));
+    b.setStatus("PAID");
+    em.persist(b);
+    em.flush();
+
+    // 2. Create Payment
+    Payment p = new Payment();
+    p.setBooking(b);
+    p.setAmount(r.getRoomPrice());
+    p.setPaymentDate(new java.sql.Date(System.currentTimeMillis()));
+    p.setPaymentMode(paymentMode);
+    p.setStatus("SUCCESS");
+
+    em.persist(p);
+    em.flush();
+
+    return p.getPaymentId();
+    }
 
 }

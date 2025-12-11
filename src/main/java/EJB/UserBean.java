@@ -27,7 +27,7 @@ public class UserBean implements UserBeanLocal {
   
   //booking
     @Override
-    public void createBooking(Integer userId, Integer roomId, Date checkIn, Date checkOut) {
+    public void createBooking(Integer userId, Integer roomId,java.sql.Date checkIn, java.sql.Date checkOut) {
              Users u = em.find(Users.class, userId);
         Rooms r = em.find(Rooms.class, roomId);
         if (u == null) throw new IllegalArgumentException("Invalid user");
@@ -138,6 +138,4 @@ public Users findUserByUsernamePassword(String username, String password) {
         return null;
     }
 }
-
-
 }

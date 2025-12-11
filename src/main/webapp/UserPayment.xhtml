@@ -1,11 +1,48 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Payment</title>
+    <style>
+        body { font-family: 'Segoe UI'; background:#eef2ec; }
+        .card { width:40%; margin:auto; background:white; padding:30px;
+                border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.1); }
+        .btn { background:#394b3c; color:white; border:none;
+               padding:10px 20px; border-radius:6px; cursor:pointer; }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="card">
+        <h2>Payment</h2>
+
+        <h:form>
+    <h:panelGrid columns="2">
+
+        <div>
+            Room ID: #{userCDIbean.selectedRoomId} <br/>
+Booking ID: #{userCDIbean.selectedBookingId} <br/>
+User ID: #{userCDIbean.userId} <br/>
+        </div>
+
+    
+<h:outputLabel value="Payment Mode:" />
+<h:selectOneMenu value="#{userCDIbean.paymentMode}">
+    <f:selectItem itemValue="Online" itemLabel="Online"/>
+    <f:selectItem itemValue="Card" itemLabel="Card"/>
+    <f:selectItem itemValue="Cash" itemLabel="Cash"/>
+</h:selectOneMenu>
+
+<h:commandButton value="Pay Now" action="#{userCDIbean.processPayment}" />
+
+    </h:panelGrid>
+</h:form>
+
+    </div>
+
+</h:body>
 </html>

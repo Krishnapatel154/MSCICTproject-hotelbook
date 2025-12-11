@@ -39,6 +39,7 @@ public interface AdminBeanLocal {
     
     
     // BOOKINGS (admin management)
+    public Integer processPayment(Integer userId, Integer roomId, String paymentMode);
     public void addBooking(Integer userId, Integer roomId, java.sql.Date checkIn, java.sql.Date checkOut, String status);
     public void updateBooking(Integer bookingId, Integer userId, Integer roomId, java.sql.Date checkIn, java.sql.Date checkOut, String status);
     public void deleteBooking(Integer bookingId);

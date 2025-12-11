@@ -10,6 +10,7 @@ import Entity.Rooms;
 import Entity.Users;
 import jakarta.ejb.Local;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  *
@@ -18,7 +19,7 @@ import java.util.Collection;
 @Local
 public interface UserBeanLocal {
        // Bookings for user
-   public void createBooking(Integer userId, Integer roomId, java.sql.Date checkIn, java.sql.Date checkOut);
+   public void createBooking(Integer userId, Integer roomId,java.sql.Date checkIn, java.sql.Date checkOut);
    public void cancelBooking(Integer bookingId, Integer userId);
    public Collection<Booking> getBookingsOfUser(Integer userId);
     

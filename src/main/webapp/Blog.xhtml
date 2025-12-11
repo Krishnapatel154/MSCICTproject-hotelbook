@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+
+<h:head>
+    <title>Our Blog</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #eef2ec;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #394b3c;
+            margin-bottom: 20px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .blog-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+            transition: 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .blog-img {
+            width: 100%;
+            height: 170px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 15px;
+        }
+
+        .blog-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2f3f32;
+            margin-bottom: 8px;
+        }
+
+        .blog-desc {
+            font-size: 14px;
+            color: #5d6c5f;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .btn-read {
+            background: #394b3c;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-read:hover {
+            background: #2f3f32;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+<div class="container">
+
+    <h1>Our Blog</h1>
+
+    <div class="blog-grid">
+
+        <!-- Card 1 -->
+        <div class="blog-card">
+            <div class="blog-img" style="background-image:url('#{request.contextPath}/images/hero.jpg');"></div>
+            <div class="blog-title">Top 5 Luxury Hotels of 2025</div>
+            <div class="blog-desc">
+                Discover the most luxurious and comfortable hotels to stay in
+                during your next vacation. Here’s our expert list...
+            </div>
+            <a href="#" class="btn-read">Read More</a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="blog-card">
+            <div class="blog-img" style="background-image:url('#{request.contextPath}/images/hero.jpg');"></div>
+            <div class="blog-title">How to Plan a Perfect Trip</div>
+            <div class="blog-desc">
+                Planning a trip can be stressful—here are the best tips to make your
+                journey smooth, affordable, and memorable.
+            </div>
+            <a href="#" class="btn-read">Read More</a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="blog-card">
+            <div class="blog-img" style="background-image:url('#{request.contextPath}/images/hero.jpg');"></div>
+            <div class="blog-title">Choosing the Right Room Type</div>
+            <div class="blog-desc">
+                Suite or Deluxe? Learn how to choose the perfect room type according
+                to your budget and comfort needs.
+            </div>
+            <a href="#" class="btn-read">Read More</a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="blog-card">
+            <div class="blog-img" style="background-image:url('#{request.contextPath}/images/hero.jpg');"></div>
+            <div class="blog-title">Best Hotel Foods You Must Try</div>
+            <div class="blog-desc">
+                Check out these delicious and popular dishes served in premium hotels
+                across the world.
+            </div>
+            <a href="#" class="btn-read">Read More</a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="blog-card">
+            <div class="blog-img" style="background-image:url('#{request.contextPath}/images/hero.jpg');"></div>
+            <div class="blog-title">Budget Travel Tips</div>
+            <div class="blog-desc">
+                Want to travel without spending too much? Here are some proven and
+                easy budget-saving travel hacks.
+            </div>
+            <a href="#" class="btn-read">Read More</a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="blog-card">
+            <div class="blog-img" style="background-image:url('#{request.contextPath}/images/hero.jpg');"></div>
+            <div class="blog-title">Most Romantic Hotels for Couples</div>
+            <div class="blog-desc">
+                Planning a honeymoon or a romantic weekend? These hotels offer the
+                best couple-friendly experiences.
+            </div>
+            <a href="#" class="btn-read">Read More</a>
+        </div>
+
+    </div>
+
+</div>
+
+</h:body>
+</html>
+
