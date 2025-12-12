@@ -1,42 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
 
 <h:head>
     <title>About Us</title>
 
     <style>
+        :root {
+            --bg: #eef2ec;
+            --primary: #2d3c2a;
+            --dark: #3a4b3a;
+            --gold: #c8ac59;
+            --white: #ffffff;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: #eef2ec;
-            font-family: "Segoe UI", sans-serif;
+            background: var(--bg);
+            font-family: "Poppins", sans-serif;
         }
 
+        /* ---------------- NAVBAR ---------------- */
+        .navbar {
+            background: #394b3c;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            text-decoration: underline;
+        }
+
+        /* ---------------- MAIN CARD ---------------- */
         .container {
             max-width: 900px;
-            margin: 60px auto;
-            background: #fff;
+            margin: 40px auto;
+            background: var(--white);
             padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            animation: fadeIn 0.5s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
-        h1 {
+        .title {
+            font-size: 32px;
+            font-weight: 700;
             text-align: center;
-            color: #394b3c;
-            margin-bottom: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
         }
 
-        .sub {
-            text-align: center;
-            font-size: 18px;
-            color: #5e6d60;
-            margin-bottom: 30px;
+        .underline {
+            width: 60px;
+            height: 4px;
+            background: var(--gold);
+            margin: 10px auto 30px auto;
+            border-radius: 4px;
         }
 
         .section {
@@ -44,8 +77,11 @@
         }
 
         .section h2 {
-            color: #2f3f32;
-            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 8px;
+            border-left: 6px solid var(--gold);
+            padding-left: 10px;
         }
 
         .section p {
@@ -54,92 +90,93 @@
             font-size: 15px;
         }
 
+        /* TEAM */
+        .team-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 26px;
+            margin-top: 40px;
+        }
+
         .team {
+            margin-top: 25px;
             display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
+            justify-content: center;
         }
 
         .team-card {
-            width: 27%;
-            background: #fafafa;
+            width: 280px;
+            background: var(--white);
+            border-left: 6px solid var(--gold);
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 16px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            transition: 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
         }
 
         .team-card h3 {
-            margin-bottom: 10px;
-            color: #394b3c;
+            color: var(--primary);
+            margin-bottom: 8px;
         }
 
         .team-card p {
             color: #5d6c5f;
             font-size: 14px;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
     </style>
 </h:head>
 
 <h:body>
 
+<!-- NAVBAR (same as UserRoom page) -->
+<div class="navbar">
+    <div class="nav-links">
+        <a href="Home.jsf">Home</a>
+        <a href="UserHotel.jsf">Hotel</a>
+        <a href="AboutUs.jsf" class="active">About Us</a>
+        <a href="Blog.jsf">Blog</a>
+    </div>
+</div>
+
+<!-- MAIN ABOUT US CARD -->
 <div class="container">
 
-    <h1>About Us</h1>
-    <div class="sub">Your Comfort, Our Priority</div>
+    <div class="title">About Us</div>
+    <div class="underline"></div>
 
     <div class="section">
         <h2>Who We Are</h2>
         <p>
-            We are a leading hotel booking platform dedicated to providing a smooth,
-            fast, and user-friendly booking experience. Our mission is to make hotel
-            reservations effortless and reliable for all our customers.
+            We are a modern hotel booking system built with clean UI,
+            fast backend, and a fully automated booking process.
         </p>
     </div>
 
     <div class="section">
         <h2>Our Mission</h2>
         <p>
-            Our mission is to deliver exceptional service with guaranteed comfort.
-            We focus on transparency, secure bookings, and complete customer
-            satisfaction through continuous innovation.
+            To provide a smooth and secure booking experience to all customers—
+            with verified rooms, real-time booking confirmation, and online payment.
         </p>
     </div>
 
-<!--    <div class="section">
-        <h2>Why Choose Us?</h2>
-        <p>
-             Easy & secure booking process<br/>
-             24/7 customer support<br/>
-             Trusted hotels & verified rooms<br/>
-             Smooth user experience with modern UI<br/>
-        </p>
-    </div>-->
-
-    <h2 style="text-align:center; margin-top:40px; color:#394b3c;">Meet Our Team</h2>
+    <div class="team-title">Meet the Developer</div>
 
     <div class="team">
-
         <div class="team-card">
             <h3>Krishna Patel</h3>
-            <p>Full-Stack Developer<br/>System Design  Backend</p>
+            <p>
+                Full-Stack Developer<br/>
+                Java · JSF · EJB · MySQL · React · Node.js<br/><br/>
+                Backend • Architecture • UI/UX
+            </p>
         </div>
-
-        <div class="team-card">
-            <h3>Developer B</h3>
-            <p>Frontend Developer<br/>UI / UX Designing</p>
-        </div>
-
-        <div class="team-card">
-            <h3>Developer C</h3>
-            <p>Database  DevOps<br/>Cloud Management</p>
-        </div>
-
     </div>
 
 </div>

@@ -1,11 +1,129 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from UserList
-    </h:body>
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>User Management</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: #eef2ec;
+        }
+
+        /* ----- Container like Room UI ----- */
+        .page-container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 700;
+            color: #2d3c2a;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* ----- Table UI same as Room UI ----- */
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        th {
+            background: #3a4b3a;
+            color: white;
+            padding: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f4f7f4;
+        }
+
+        /* ----- Delete button same as Room UI ----- */
+        .delete-btn {
+            background: #c0392b;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .delete-btn:hover {
+            background: #a5281f;
+        }
+
+    </style>
+
+</h:head>
+
+<h:body>
+
+    <div class="page-container">
+
+        <div class="title">User List</div>
+
+        <h:form>
+            <h:dataTable value="#{adminCDIbean.userList}" var="u"
+                         styleClass="user-table">
+
+                <h:column>
+                    <f:facet name="header">User ID</f:facet>
+                    #{u.userId}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Username</f:facet>
+                    #{u.username}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Email</f:facet>
+                    #{u.email}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Phone</f:facet>
+                    #{u.phone}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Action</f:facet>
+                    <h:commandButton value="Delete"
+                                     action="#{adminCDIbean.deleteUser(u.userId)}"
+                                     styleClass="delete-btn"
+                                     onclick="return confirm('Delete this user?');">
+                        <f:ajax render="@form"/>
+                    </h:commandButton>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+
+    </div>
+
+</h:body>
 </html>

@@ -9,72 +9,168 @@
 
 <h:head>
     <title>Rooms List</title>
+
     <style>
-        body { font-family: "Segoe UI", sans-serif; background: #f6f7f4; margin:0; padding:0; }
-        .container { width: 90%; margin:auto; padding: 40px 0; }
-        .hotel-table { width: 100%; border-collapse: collapse; background: white; 
-                       box-shadow: 0 6px 20px rgba(0,0,0,0.15); border-radius: 10px; }
-        .hotel-header { background: #394b3c; color: white; font-weight: bold; padding: 12px; }
-        .hotel-row td { padding: 10px; border-bottom: 1px solid #ddd; }
-        .hotel-row:hover { background: #f0f5f0; }
-        .btn {
-            background: #394b3c;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #f6f7f4;
         }
+
+        /* ---------------- NAVBAR ---------------- */
+        .navbar {
+            background: #394b3c;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .nav-links a:hover,
+        .nav-links .active {
+            text-decoration: underline;
+        }
+
+        /* -------------- ROOM GRID -------------- */
+        .room-container {
+            width: 92%;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 25px;
+        }
+
+        /* -------------- ROOM CARD -------------- */
+        .room-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            overflow: hidden;
+            transition: 0.3s ease-in-out;
+        }
+
+        .room-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+        }
+
+        /* IMAGE */
+        .room-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* CONTENT */
+        .room-details {
+            padding: 15px 18px;
+        }
+
+        .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #394b3c;
+        }
+
+        .value {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .availability {
+    color: green;
+    font-weight: bold;
+}
+
+.not-available {
+    color: red;
+    font-weight: bold;
+}
+
+        /* BOOK BUTTON */
+        .btn {
+            width: 100%;
+            background: #394b3c;
+            padding: 10px 0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
         .btn:hover {
             background: #2c3a2e;
         }
+
     </style>
 </h:head>
 
+
 <h:body>
-    <div class="container">
-        <h1>Rooms for Selected Hotel</h1>
 
-        <h:dataTable value="#{userCDIbean.rooms}" 
-                     var="room"
-                     styleClass="hotel-table"
-                     headerClass="hotel-header"
-                     rowClasses="hotel-row">
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="nav-links">
+            <a class="active" href="Home.jsf">Home</a>
+            <a href="UserHotel.jsf">Hotel</a>
+            <a href="Aboutus.jsf">Blog</a>
+            <a href="Blog.jsf">About Us</a>
+        </div>
+    </div>
 
-            <h:column>
-                <f:facet name="header">Room ID</f:facet>
-                #{room.roomId}
-            </h:column>
+    <h1 style="text-align:center; margin-top:25px; color:#2f3f32;">Available Rooms</h1>
 
-            <h:column>
-                <f:facet name="header">Type</f:facet>
-                #{room.roomType}
-            </h:column>
+    <div class="room-container">
 
-            <h:column>
-                <f:facet name="header">Price</f:facet>
-                #{room.roomPrice}
-            </h:column>
+        <ui:repeat value="#{userCDIbean.rooms}" var="room">
 
-            <h:column>
-                <f:facet name="header">Availability</f:facet>
-                #{room.availability ? 'Available' : 'Booked'}
-            </h:column>
+            <div class="room-card">
 
-            <!-- BOOK BUTTON COLUMN -->
-            <h:column>
-                <f:facet name="header">Action</f:facet>
+                <img class="room-img" src="#{request.contextPath}/images/Hotel1.jpg" alt="Room"/>
 
-                <h:form>
-                    <h:commandButton value="Book"
-    styleClass="btn"
-    action="#{userCDIbean.goToBooking(room.roomId)}"
-    disabled="#{not room.availability}" />
-                </h:form>
-            </h:column>
+                <div class="room-details">
 
-        </h:dataTable>
+<!--                    <div class="label">Room ID:</div>
+                    <div class="value">#{room.roomId}</div>-->
+
+                    <div class="label">Room Type:</div>
+                    <div class="value">#{room.roomType}</div>
+
+                    <div class="label">Price:</div>
+                    <div class="value">₹ #{room.roomPrice}</div>
+
+                    <div class="label">Availability:</div>
+                    <div class="value">
+   <div class="value">
+    <h:outputText value="#{room.availability ? 'Available' : 'Booked'}"
+                  styleClass="#{room.availability ? 'availability' : 'not-available'}"/>
+</div>
+
+</div>
+
+
+                    <h:form>
+                        <h:commandButton value="Book"
+                                         styleClass="btn"
+                                         action="#{userCDIbean.goToBooking(room.roomId)}"
+                                         disabled="#{not room.availability}" />
+                    </h:form>
+
+                </div>
+
+            </div>
+
+        </ui:repeat>
 
     </div>
+
 </h:body>
 </html>

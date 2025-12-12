@@ -31,6 +31,15 @@ public class LoginBean {
 
         this.errorstatus = status;
     }
+    
+     public String getUserName() {
+        return keepRecord.getUsername();
+    }
+
+    // If you have email stored, add:
+    public String getEmail() {
+        return keepRecord.getUsername(); // change when email field exists
+    }
 
     public LoginBean() {
 

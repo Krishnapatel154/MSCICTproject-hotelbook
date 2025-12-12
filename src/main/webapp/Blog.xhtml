@@ -3,7 +3,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
 
 <h:head>
     <title>Our Blog</title>
@@ -14,6 +15,27 @@
             padding: 0;
             background: #eef2ec;
             font-family: "Segoe UI", sans-serif;
+        }
+
+        /* ---------------- NAVBAR ---------------- */
+        .navbar {
+            background: #394b3c;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            text-decoration: underline;
         }
 
         .container {
@@ -83,7 +105,6 @@
             background: #2f3f32;
         }
 
-        /* Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -92,6 +113,16 @@
 </h:head>
 
 <h:body>
+
+<!-- NAVBAR (same as About Us page) -->
+<div class="navbar">
+    <div class="nav-links">
+        <a href="Home.jsf">Home</a>
+        <a href="UserHotel.jsf">Hotel</a>
+        <a href="AboutUs.jsf">About Us</a>
+        <a href="Blog.jsf" class="active">Blog</a>
+    </div>
+</div>
 
 <div class="container">
 
@@ -171,4 +202,3 @@
 
 </h:body>
 </html>
-

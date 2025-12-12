@@ -209,29 +209,24 @@
         <div class="navbar">
             <div class="logo" style="font-size: 26px; font-weight: bold;">Hotel Sphere</div>
 
-            <div class="nav-links">
-                <a class="active" href="Home.jsf">Home</a>
-                <a href="UserHotel.jsf">Hotel </a>
-                <a href="Aboutus.jsf">Blog</a>
-                <a href="Blog.jsf">About Us</a>
-                <div style="position: relative; height: 40px;">
+          <div class="nav-links" style="display: flex; align-items: center; gap: 20px;">
+        <a class="active" href="Home.jsf">Home</a>
+        <a href="UserHotel.jsf">Hotel</a>
+        <a href="Blog.jsf">Blog</a>
+        <a href="Aboutus.jsf">About Us</a>
 
-                    <!-- Top-Right Back Button -->
-                    <h:link outcome="Logout.jsf"
-                            style="position:absolute;
-                            right:0;
-                            top:0;
-                            padding:8px 16px;
-                            background:#0a2342;
-                            color:#ffffff;
-                            border-radius:6px;
-                            text-decoration:none;
-                            font-size:14px;">
-                        ⬅ Logout
-                    </h:link>
-
-                </div>
-            </div>
+        <!-- Logout Button Inline -->
+        <h:link outcome="Logout.jsf" 
+                style="padding: 6px 14px;
+                       background:#2d3c2a;
+                       color:#ffffff;
+                       border-radius:6px;
+                       text-decoration:none;
+                       font-size:14px;
+                       margin-left: 10px;">
+             Logout
+        </h:link>
+    </div>
 
 
 

@@ -1,11 +1,113 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Payment
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Payment Records</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: #eef2ec;
+        }
+
+        .page-container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 700;
+            text-align: center;
+            color: #2d3c2a;
+            margin-bottom: 25px;
+        }
+
+        .payment-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            font-size: 16px;
+        }
+
+        th {
+            background: #3a4b3a;
+            color: white;
+            padding: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        tr:hover {
+            background: #f4f7f4;
+        }
+
+    </style>
+
+</h:head>
+
+<h:body>
+
+<div class="page-container">
+
+    <div class="title">Payment Records</div>
+
+    <h:form>
+        <h:dataTable value="#{adminCDIbean.paymentList}" var="p"
+                     styleClass="payment-table">
+
+            <h:column>
+                <f:facet name="header">Payment ID</f:facet>
+                #{p.paymentId}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Booking ID</f:facet>
+                #{p.booking.bookingId}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Amount</f:facet>
+                ₹ #{p.amount}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Payment Date</f:facet>
+                <h:outputText value="#{p.paymentDate}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Payment Mode</f:facet>
+                #{p.paymentMode}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+                <span style="color: green; font-weight:600;">
+                    #{p.status}
+                </span>
+            </h:column>
+
+        </h:dataTable>
+    </h:form>
+
+</div>
+
+</h:body>
 </html>

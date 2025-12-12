@@ -552,7 +552,7 @@ public class AdminBean implements AdminBeanLocal {
     public Collection<Users> getUsersByGroup(Integer groupId) {
         try {
             return em.createQuery(
-                    "SELECT u FROM Users u WHERE u.group.groupId = :groupId",
+                    "SELECT u FROM Users u WHERE  u.groupMaster.groupId  = :groupId",
                     Users.class)
                     .setParameter("groupId", groupId)
                     .getResultList();

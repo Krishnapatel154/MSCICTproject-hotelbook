@@ -1,11 +1,156 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Booking
-    </h:body>
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Booking List</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: #eef2ec;
+        }
+
+        .card {
+            width: 95%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #2d3c2a;
+        }
+
+        .booking-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        th {
+            background: #3a4b3a;
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #eef3f7;
+        }
+
+        .update-btn {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .update-btn:hover {
+            background: #1f6aa1;
+        }
+
+        select {
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+    </style>
+</h:head>
+
+<h:body>
+
+<div class="card">
+
+    <div class="header-row">
+        <div class="title">Booking List</div>
+    </div>
+
+    <h:form>
+        <h:dataTable value="#{adminCDIbean.bookingList}" var="b"
+                     styleClass="booking-table">
+
+            <h:column>
+                <f:facet name="header">Booking ID</f:facet>
+                #{b.bookingId}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">User</f:facet>
+                #{b.users.username}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Room</f:facet>
+                #{b.rooms.roomId}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Check-In</f:facet>
+                #{b.checkInDate}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Check-Out</f:facet>
+                #{b.checkOutDate}
+            </h:column>
+
+            <!-- STATUS DROPDOWN -->
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+
+                <h:selectOneMenu value="#{b.status}">
+                    <f:selectItem itemValue="Pending" itemLabel="Pending" />
+                    <f:selectItem itemValue="Confirmed" itemLabel="Confirmed" />
+                    <f:selectItem itemValue="Cancelled" itemLabel="Cancelled" />
+                </h:selectOneMenu>
+
+            </h:column>
+
+            <!-- UPDATE BUTTON -->
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+
+                <h:commandButton value="Update"
+                    action="#{adminCDIbean.updateBookingStatus(b.bookingId, b.status)}"
+                    styleClass="update-btn"/>
+            </h:column>
+
+        </h:dataTable>
+    </h:form>
+
+</div>
+
+</h:body>
 </html>

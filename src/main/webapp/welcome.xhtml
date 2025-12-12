@@ -2,13 +2,142 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-          <div class="card">
+<h:head>
+    <title>Hotel Booking Admin Panel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #dbe6d8, #eef2ec);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: #2f3f32;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: center;
+            color: #394b3c;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: #f5f6f5;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 500;
+            color: #394b3c;
+            transition: 0.3s ease;
+        }
+        .metric-card:hover {
+            background: #e0e6de;
+            box-shadow: 0 5px 15px rgba(47,63,50,0.3);
+        }
+
+        .metric-card h3 {
+            font-size: 28px;
+            margin: 10px 0;
+            color: #2f3f32;
+        }
+
+        .metric-card p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .card { padding: 20px; }
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+
+        <!-- Welcome Card -->
+        <!-- Welcome Card -->
+<div class="card">
     <h1>Welcome Admin</h1>
-    <p>Select an option from the left menu to manage your system.</p>
+    <p>Manage your hotel booking system efficiently. Select an option from the left menu to perform operations like:</p>
+    <ul style="color:#394b3c; font-size:15px; line-height:1.8; list-style: none; padding-left:0;">
+        <li>🏨 Manage Hotels (CRUD)</li>
+        <li>🛏️ Manage Rooms (CRUD)</li>
+        <li>✅ Confirm Bookings</li>
+        <li>💳 Confirm Payments</li>
+        <li>📊 View Booking  Payment Records</li>
+    </ul>
 </div>
-    </h:body>
+
+
+        <!-- Dashboard Metrics -->
+       <!-- Dashboard Metrics -->
+<div class="card">
+    <h2 style="text-align:center; color:#2f3f32; margin-bottom:20px;">Dashboard Overview</h2>
+    <div class="dashboard-grid" style="grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px;">
+        <!-- Top Row: 3 metrics -->
+        <div class="metric-card">
+            <h3>10</h3>
+            <p>Total Hotels</p>
+        </div>
+        <div class="metric-card">
+            <h3>60</h3>
+            <p>Total Rooms</p>
+        </div>
+        <div class="metric-card">
+            <h3>35</h3>
+            <p>Pending Bookings</p>
+        </div>
+    </div>
+    <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr); gap: 20px;">
+        <!-- Bottom Row: 2 metrics -->
+        <div class="metric-card">
+            <h3>5</h3>
+            <p>Pending Payments</p>
+        </div>
+        <div class="metric-card">
+            <h3>50</h3>
+            <p>Total Records</p>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Quick Tips Card -->
+        <div class="card">
+            <h2 style="text-align:center; color:#2f3f32; margin-bottom:15px;">Quick Tips</h2>
+            <p>Always check pending bookings first to ensure customer satisfaction. Update room availability regularly and review user feedback to maintain high service standards.</p>
+        </div>
+
+    </div>
+</h:body>
 </html>

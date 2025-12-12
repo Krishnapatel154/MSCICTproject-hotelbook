@@ -133,7 +133,7 @@ public Integer getSelectedBookingId() { return selectedBookingId; }
             roomId,
             sqlCheckIn,
             sqlCheckOut,
-            "SUCCESS"
+            "PANDING"
         );
 
         // 2️⃣ Get bookingId of last inserted booking  

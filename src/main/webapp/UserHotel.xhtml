@@ -18,6 +18,32 @@
             background: #f6f7f4;
         }
 
+        /* ---------------- NAVBAR ---------------- */
+        .navbar {
+            width: 100%;
+            background: #2f3f32;
+            padding: 15px 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            text-decoration: underline;
+        }
+        
+        
+        /* ----------------------------------------- */
+
         .container {
             width: 100%;
             padding: 40px 0;
@@ -31,7 +57,6 @@
             color: #2f3f32;
         }
 
-        /* Card Grid */
         .card-wrapper {
             width: 90%;
             margin: auto;
@@ -40,7 +65,6 @@
             gap: 28px;
         }
 
-        /* Card */
         .hotel-card {
             background: white;
             border-radius: 18px;
@@ -54,14 +78,12 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.22);
         }
 
-        /* Hotel Image */
         .hotel-img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
 
-        /* Card Content */
         .hotel-content {
             padding: 18px 20px;
         }
@@ -98,7 +120,6 @@
             margin-bottom: 12px;
         }
 
-        /* Buttons */
         .view-btn {
             width: 100%;
             padding: 12px;
@@ -117,8 +138,19 @@
     </style>
 </h:head>
 
-
 <h:body>
+
+<!-- ✅ NAVBAR ADDED -->
+<div class="navbar">
+    <div class="nav-links">
+        <a class="active" href="Home.jsf">Home</a>
+        <a href="UserHotel.jsf">Hotel</a>
+        <a href="Blog.jsf">Blog</a>
+        <a href="Aboutus.jsf">About Us</a>
+    </div>
+</div>
+<!-- END NAVBAR -->
+
 <div class="container">
 
     <h1>Explore Hotels</h1>
@@ -131,7 +163,6 @@
 
                 <div class="hotel-card">
 
-                    <!-- Dummy Hotel Image (Optional: Replace with real image path) -->
                     <img class="hotel-img"
                          src="#{request.contextPath}/images/hero.jpg"
                          alt="Hotel Image"/>
@@ -164,6 +195,6 @@
     </h:form>
 
 </div>
-</h:body>
 
+</h:body>
 </html>

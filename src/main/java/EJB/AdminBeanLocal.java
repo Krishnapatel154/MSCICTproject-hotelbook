@@ -72,6 +72,7 @@ public interface AdminBeanLocal {
 
     public Collection<Rooms> getRoomsByHotelId(Integer filterHotelId);
    // public Users loginUser(String email, String password);
+    
 
 
     

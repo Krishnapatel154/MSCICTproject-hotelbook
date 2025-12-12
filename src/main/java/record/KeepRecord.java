@@ -27,11 +27,20 @@ public class KeepRecord implements Serializable {
     private String token;
     private String username;
     private String password;
+    private String email;
     private String errorStatus;
     private Credential credential;
 
     public String getErrorStatus() {
         return errorStatus;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Credential getCredential() {

@@ -9,46 +9,134 @@
 <h:head>
     <title>Room Booking</title>
     <style>
-        body { font-family: "Segoe UI"; background: #eef2ec; }
-        .card { width: 40%; margin:auto; padding:30px; background:white;
-                border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.1); }
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(to right, #eef2ec, #dbe6d8);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ---------------- NAVBAR ---------------- */
+        .navbar {
+            background: #394b3c;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            text-decoration: underline;
+        }
+
+        /* Card */
+        .card {
+            width: 40%;
+            min-width: 320px;
+            margin: 60px auto;
+            padding: 40px 30px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #394b3c;
+            margin-bottom: 25px;
+        }
+
+        .card .label { font-weight: 600; color: #3c4b39; padding-right: 15px; text-align: right; vertical-align: middle; }
+        .card .value { text-align: left; }
+
+        h:inputText {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #d0d6cc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+        h:inputText:focus {
+            border-color: #394b3c;
+            outline: none;
+            box-shadow: 0 0 5px rgba(57,75,60,0.5);
+        }
+
         .btn {
-            background:#394b3c; color:white; padding:8px 20px;
-            border:none; border-radius:6px; cursor:pointer;
+            display: block;
+            width: 100%;
+            background: linear-gradient(90deg, #2f3f32, #394b3c);
+            color: white;
+            padding: 12px 0;
+            margin-top: 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #394b3c, #2f3f32);
+            box-shadow: 0 5px 15px rgba(57,75,60,0.4);
+        }
+
+        @media (max-width: 768px) {
+            .card { width: 90%; padding: 30px 20px; }
         }
     </style>
 </h:head>
 
 <h:body>
-    <div class="card">
-        <h2>Book Room</h2>
 
-        <h:form>
-            <h:panelGrid columns="2" columnClasses="label,value" cellpadding="6">
-
-                <h:outputLabel value="Room ID:" />
-                <h:outputText value="#{userCDIbean.bookingRoomId}" />
-
-                <h:outputLabel value="Check-in Date:" />
-                <h:inputText value="#{userCDIbean.checkIn}" required="true" type="date">
-                    <f:convertDateTime pattern="yyyy-MM-dd" />
-                </h:inputText>
-
-                <h:outputLabel value="Check-out Date:" />
-                <h:inputText value="#{userCDIbean.checkOut}" required="true" type="date">
-                    <f:convertDateTime pattern="yyyy-MM-dd" />
-                </h:inputText>
-
-            </h:panelGrid>
-
-            <br/>
-
-           <h:commandButton value="Book Now"
-     action="#{userCDIbean.bookRoomAndGoToPayment(userCDIbean.bookingRoomId, room.hotel.hotelId)}" />
-
-
-        </h:form>
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-links">
+        <a href="Home.jsf">Home</a>
+        <a href="UserHotel.jsf">Hotel</a>
+        <a href="AboutUs.jsf">About Us</a>
+        <a href="Blog.jsf">Blog</a>
     </div>
+</div>
+
+<!-- ROOM BOOKING CARD -->
+<div class="card">
+    <h2>Book Room</h2>
+
+    <h:form>
+        <h:panelGrid columns="2" columnClasses="label,value" cellpadding="8">
+            <h:outputLabel value="Check-in Date:" />
+            <h:inputText value="#{userCDIbean.checkIn}" required="true" type="date">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:inputText>
+
+            <h:outputLabel value="Check-out Date:" />
+            <h:inputText value="#{userCDIbean.checkOut}" required="true" type="date">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:inputText>
+        </h:panelGrid>
+
+        <h:commandButton value="Book Now"
+                         styleClass="btn"
+                         action="#{userCDIbean.bookRoomAndGoToPayment(userCDIbean.bookingRoomId, room.hotel.hotelId)}" />
+    </h:form>
+</div>
 
 </h:body>
-</html> 
+</html>

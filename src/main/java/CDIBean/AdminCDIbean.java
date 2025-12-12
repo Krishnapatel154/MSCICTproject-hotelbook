@@ -6,7 +6,9 @@ package CDIBean;
 
 import EJB.AdminBeanLocal;
 import EJB.UserBeanLocal;
+import Entity.Booking;
 import Entity.Hotels;
+import Entity.Payment;
 import Entity.Rooms;
 import Entity.Users;
 import jakarta.ejb.EJB;
@@ -375,6 +377,85 @@ public String deleteRoom(Integer id) {
         return null;
     }
 }
+//userList
 
+ private Collection<Users> userList;
+
+    // Load all users whose Group ID = 2
+    public Collection<Users> getUserList() {
+        if (userList == null) {
+            userList = abl.getUsersByGroup(2);
+        }
+        return userList;
+    }
+    
+        public String deleteUser(Integer userId) {
+        abl.deleteUser(userId);
+        userList = abl.getUsersByGroup(2); // refresh
+        return null;
+    }
+//booking
+        
+        private Integer bookingId;
+    private String status;
+
+    // ---------- GET BOOKING LIST ----------
+    public Collection<Booking> getBookingList() {
+        return abl.getAllBookings();
+    }
+
+    // ---------- UPDATE ONLY STATUS ----------
+    public String updateBookingStatus(Integer bookingId, String status) {
+        Booking b = abl.findBookingById(bookingId);
+        if (b != null) {
+            
+             java.util.Date uIn  = b.getCheckInDate();   // may be java.util.Date
+    java.util.Date uOut = b.getCheckOutDate();
+
+    java.sql.Date sqlIn  = (uIn  != null) ? new java.sql.Date(uIn.getTime())  : null;
+    java.sql.Date sqlOut = (uOut != null) ? new java.sql.Date(uOut.getTime()) : null;
+            abl.updateBooking(b.getBookingId(), 
+                    b.getUsers().getUserId(),
+                    b.getRooms().getRoomId(),
+                sqlIn,
+        sqlOut,
+                    status
+            );
+        }
+        return "BookingList.jsf?faces-redirect=true";
+    } 
+
+    // GETTERS SETTERS
+    public Integer getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(Integer bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+   //payment
+    private Collection<Payment> paymentList;
+
+    public Collection<Payment> getPaymentList() {
+        if (paymentList == null) {
+            paymentList = abl.getAllPayments();
+        }
+        return paymentList;
+    }
+
+    // Navigate to Payments page
+    public String goToPayments() {
+        return "Payments.jsf?faces-redirect=true";
+    }
+        
 }
     
