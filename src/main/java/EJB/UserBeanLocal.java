@@ -32,5 +32,8 @@ public interface UserBeanLocal {
    public Rooms findRoomById(Integer roomId);
    
 public Users findUserByUsernamePassword(String username, String password);
+public Users findByUsername(String username);
+
+
 
 }

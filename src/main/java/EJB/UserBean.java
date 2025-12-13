@@ -70,6 +70,7 @@ public class UserBean implements UserBeanLocal {
             return Collections.emptyList();
         }  
     }
+    
    
     
     //payment 
@@ -125,17 +126,32 @@ public class UserBean implements UserBeanLocal {
     }
     
    @Override
-public Users findUserByUsernamePassword(String username, String password) {
-    try {
-        return em.createQuery(
-            "SELECT u FROM Users u WHERE u.username = :uname AND u.password = :pass",
-            Users.class
-        )
-        .setParameter("uname", username)
-        .setParameter("pass", password)
-        .getSingleResult();
-    } catch (Exception e) {
-        return null;
+    public Users findUserByUsernamePassword(String username, String password) {
+        try {
+            return em.createQuery(
+                "SELECT u FROM Users u WHERE u.username = :uname AND u.password = :pass",
+                Users.class
+            )
+            .setParameter("uname", username)
+            .setParameter("pass", password)
+            .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
-}
+    
+    public Collection<Booking> getBookingsByUser(int userId) {
+        return em.createQuery(
+                "SELECT b FROM Booking b WHERE b.user.userId = :uid",
+                Booking.class)
+                .setParameter("uid", userId)
+                .getResultList();
+    }
+    @Override
+    public Users findByUsername(String username) {
+            return em.createNamedQuery("Users.findByUsername", Users.class)
+                     .setParameter("username", username)
+                     .getSingleResult();
+    }
+    
 }

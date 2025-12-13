@@ -200,6 +200,63 @@
                 width: 22px;
                 cursor: pointer;
             }
+            /* PROFILE DROPDOWN */
+.profile-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #2d3c2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    background: white;
+    color: #333;
+    min-width: 160px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    display: none;
+    overflow: hidden;
+    z-index: 999;
+}
+
+.profile-menu a {
+    display: block;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.profile-menu a:hover {
+    background: #f2f2f2;
+}
+
+/* Show menu on hover */
+.profile-wrapper:hover .profile-menu {
+    display: block;
+}
+
         </style>
     </head>
 
@@ -216,16 +273,31 @@
         <a href="Aboutus.jsf">About Us</a>
 
         <!-- Logout Button Inline -->
-        <h:link outcome="Logout.jsf" 
-                style="padding: 6px 14px;
-                       background:#2d3c2a;
-                       color:#ffffff;
-                       border-radius:6px;
-                       text-decoration:none;
-                       font-size:14px;
-                       margin-left: 10px;">
-             Logout
+        <div class="profile-wrapper">
+
+    <!-- Profile Button -->
+    <div class="profile-btn">
+        <div class="profile-avatar">
+            #{sessionScope.username.substring(0,1)}
+        </div>
+        <span>#{sessionScope.username}</span>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="profile-menu">
+        <a href="UserBookingList.jsf">My Bookings</a>
+
+        <h:link outcome="Logout.jsf"
+                style="display:block;
+                       padding:12px 15px;
+                       color:#c0392b;
+                       text-decoration:none;">
+            Logout
         </h:link>
+    </div>
+
+</div>
+
     </div>
 
 

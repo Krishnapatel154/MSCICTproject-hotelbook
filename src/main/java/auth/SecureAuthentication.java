@@ -6,6 +6,8 @@
 package auth;
 
 import CDIBean.LoginBean;
+import EJB.UserBeanLocal;
+import Entity.Users;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
 import java.io.Serializable;
@@ -23,6 +25,7 @@ import jakarta.security.enterprise.identitystore.CredentialValidationResult.Stat
 import jakarta.security.enterprise.identitystore.IdentityStoreHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import static jwtrest.Constants.AUTHORIZATION_HEADER;
 import static jwtrest.Constants.BEARER;
 import jwtrest.JWTCredential;
@@ -47,6 +50,8 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
     LoginBean lbean;
     @Inject
     KeepRecord keepRecord;
+    @Inject
+UserBeanLocal userBean;
 
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext ctx) throws AuthenticationException {
@@ -78,6 +83,24 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                 result = handler.validate(credential);
 
                 if (result.getStatus() == Status.VALID) {
+//               session store
+                String principalUsername  = result.getCallerPrincipal().getName();
+
+                // fetch user from DB
+                Users user = userBean.findByUsername(username);
+
+                // extract userId
+                Integer userId = user.getUserId();
+
+                // store in session
+                HttpSession session = request.getSession(true);
+                session.setAttribute("userId", userId);
+                session.setAttribute("username", username);
+                session.setAttribute("roles", result.getCallerGroups());
+
+                System.out.println("SESSION USER ID = " + userId);
+//                end session store
+
                     keepRecord.setErrorStatus("");
                     AuthenticationStatus status = createToken(result, ctx);
 

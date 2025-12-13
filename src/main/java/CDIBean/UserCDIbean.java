@@ -108,7 +108,17 @@ public void setCheckOut(java.util.Date checkOut) { this.checkOut = checkOut; }
     this.bookingRoomId = roomId;
     return "UserBooking.jsf?faces-redirect=true";
 }
-      //booking page
+      
+private Integer getUserIdFromSession() {
+    FacesContext fc = FacesContext.getCurrentInstance();
+    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+
+    if (session != null) {
+        return (Integer) session.getAttribute("userId");
+    }
+    return null;
+}
+//booking page
       
       private Integer selectedBookingId;
 
@@ -116,20 +126,20 @@ public Integer getSelectedBookingId() { return selectedBookingId; }
 
     public String bookRoomAndGoToPayment(Integer roomId, Integer hotelId) {
     try {
-//        if (loggedInUser == null) {
-//            FacesContext.getCurrentInstance().addMessage(null,
-//                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-//                "Please login first", null));
-//            return null;
-//        }
-
+     Integer sessionUserId = getUserIdFromSession();
+    if (sessionUserId == null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "Please login first", null));
+            return null;
+        }
         // Convert util.Date → sql.Date
         java.sql.Date sqlCheckIn = new java.sql.Date(checkIn.getTime());
         java.sql.Date sqlCheckOut = new java.sql.Date(checkOut.getTime());
 
         // 1️⃣ Insert booking into DB
         abl.addBooking(
-            17,
+            sessionUserId,
             roomId,
             sqlCheckIn,
             sqlCheckOut,
@@ -147,7 +157,7 @@ public Integer getSelectedBookingId() { return selectedBookingId; }
         // 3️⃣ Store these in session bean
         this.selectedRoomId = roomId;
         this.selectedHotelId = hotelId;
-        this.userId = 17;
+        this.userId = sessionUserId;
         this.selectedBookingId = bookingId;
 
         System.out.println("Booking inserted: " + bookingId);
@@ -191,5 +201,20 @@ public Integer getSelectedBookingId() { return selectedBookingId; }
         }
     }
 
-   
+   private Collection<Booking> bookingList;
+
+public Collection<Booking> getBookingList() {
+    HttpSession session = (HttpSession)
+        FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSession(false);
+
+    if (session != null && session.getAttribute("userId") != null) {
+        int userId = (int) session.getAttribute("userId");
+        bookingList = ubl.getBookingsOfUser(userId); // fetch only user's bookings
+    }
+
+    return bookingList;
+}
+
 }
