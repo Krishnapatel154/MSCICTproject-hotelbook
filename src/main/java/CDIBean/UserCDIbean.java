@@ -3,6 +3,7 @@ package CDIBean;
 import EJB.AdminBeanLocal;
 import EJB.UserBeanLocal;
 import Entity.Booking;
+import Entity.Hotels;
 import Entity.Rooms;
 import jakarta.ejb.EJB;
 import jakarta.inject.Named;
@@ -207,6 +208,22 @@ public Collection<Booking> getBookingList() {
     }
 
     return bookingList;
+}
+
+//hotelname
+// Fetch the Hotel object for the selected room
+public Hotels getSelectedHotel() {
+    Rooms room = ubl.findRoomById(selectedRoomId); // fetch Room from DB
+    if (room != null) {
+        return room.getHotels(); // returns Hotel entity
+    }
+    return null;
+}
+
+// Fetch just the hotel name
+public String getSelectedHotelName() {
+    Hotels hotel = getSelectedHotel();
+    return hotel != null ? hotel.getHotelName() : "";
 }
 
 }

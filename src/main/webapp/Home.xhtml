@@ -5,6 +5,8 @@
     <head>
         <title>GreenDoors</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+         <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
         <style>
             body {
@@ -184,11 +186,11 @@
                 font-weight: 600;
             }
 
-            .footer-nav {
-                display: flex;
-                gap: 30px;
+            .footer-nav a{
+                justify-content: space-between;
                 color: white;
                 font-size: 15px;
+                text-decoration: none;
             }
 
             .footer-icons {
@@ -196,9 +198,10 @@
                 gap: 15px;
             }
 
-            .footer-icons img {
+            .footer-icons a{
                 width: 22px;
                 cursor: pointer;
+                color: white;
             }
             /* PROFILE DROPDOWN */
 .profile-wrapper {
@@ -507,24 +510,23 @@
         <div class="footer">
 
             <div class="footer-left">
-                <img src="logo.png" width="35" />
                 GreenDoors
             </div>
 
-            <div class="footer-nav">
-                <span>Home</span>
-                <span>Service</span>
-                <span>Event</span>
-                <span>Blog</span>
-                <span>About Us</span>
+            <div class="nav-links" style="display: flex; align-items: center; gap: 20px;">
+        <a href="Home.jsf">Home</a>
+        <a href="UserHotel.jsf">Hotel</a>
+        <a href="Blog.jsf">Blog</a>
+        <a href="Aboutus.jsf">About Us</a>
+
             </div>
 
             <div class="footer-icons">
-                <img src="facebook.png" />
-                <img src="instagram.png" />
-                <img src="youtube.png" />
-                <img src="twitter.png" />
-            </div>
+    <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+</div>
 
         </div>
 

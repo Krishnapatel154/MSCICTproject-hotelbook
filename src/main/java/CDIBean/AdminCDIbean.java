@@ -498,14 +498,15 @@ public void setSelectedStatus(String selectedStatus) {
     private Collection<Payment> paymentList;
 
     public Collection<Payment> getPaymentList() {
-        if (paymentList == null) {
+        
             paymentList = abl.getAllPayments();
-        }
+      
         return paymentList;
     }
 
     // Navigate to Payments page
     public String goToPayments() {
+        paymentList = null;
         return "Payments.jsf?faces-redirect=true";
     }
         
