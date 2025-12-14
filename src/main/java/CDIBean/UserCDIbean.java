@@ -57,22 +57,14 @@ public class UserCDIbean implements Serializable {
     private String paymentMode;
     private String loggedInUser;
     
-//    private Date checkIn;
-//    private Date checkOut;
+
     
     
 
 public Integer getBookingRoomId() { return bookingRoomId; }
 public void setBookingRoomId(Integer bookingRoomId) { this.bookingRoomId = bookingRoomId; }
 
-//public Date getCheckIn() { return checkIn; }
-//public void setCheckIn(Date checkIn) { this.checkIn = checkIn; }
-//
-//public Date getCheckOut() { return checkOut; }
-//public void setCheckOut(Date checkOut) { this.checkOut = checkOut; }
 
-// ------------------------------
-// DATE FIELDS (use java.util.Date ONLY)
 // ------------------------------
 private java.util.Date checkIn;
 private java.util.Date checkOut;
@@ -143,7 +135,7 @@ public Integer getSelectedBookingId() { return selectedBookingId; }
             roomId,
             sqlCheckIn,
             sqlCheckOut,
-            "PANDING"
+            "Pending"
         );
 
         // 2️⃣ Get bookingId of last inserted booking  

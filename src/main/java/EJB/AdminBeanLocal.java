@@ -21,8 +21,8 @@ import java.util.Collection;
 public interface AdminBeanLocal {
     
      // HOTELS
-     public void addHotel(String hotelName, String location, String city, Float rating, String description);
-     public  void updateHotel(Integer hotelId, String hotelName, String location, String city, Float rating, String description);
+     public void addHotel(String hotelName, String location, String city, Float rating, String description ,String imagepath);
+     public  void updateHotel(Integer hotelId, String hotelName, String location, String city, Float rating, String description,String imagepath);
      public void deleteHotel(Integer hotelId);
      public Collection<Hotels> getAllHotel();
      public Hotels findHotelById(Integer hotelId);
@@ -30,8 +30,8 @@ public interface AdminBeanLocal {
      public Collection<Hotels> findHotelByLocation(String location);
      
         // ROOMS
-   public  void addRoom(Integer hotelId, String roomType, java.math.BigDecimal roomPrice, Boolean availability);
-    public void updateRoom(Integer roomId, Integer hotelId, String roomType, java.math.BigDecimal roomPrice, Boolean availability);
+   public  void addRoom(Integer hotelId, String roomType, java.math.BigDecimal roomPrice, Boolean availability,String roomimagepath);
+    public void updateRoom(Integer roomId, Integer hotelId, String roomType, java.math.BigDecimal roomPrice, Boolean availability,String roomimagepath);
     public void deleteRoom(Integer roomId);
     public Collection<Rooms> getAllRooms();
     public Rooms findRoomById(Integer roomId);

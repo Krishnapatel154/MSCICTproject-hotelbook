@@ -60,6 +60,8 @@ public class Hotels implements Serializable {
     @Size(max = 255)
     @Column(name = "description")
     private String description;
+    @Column(name = "image_path")
+    private String imagepath;
      @JsonbTransient
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="hotels")
     private Collection<Rooms> roomsCollection;
@@ -124,6 +126,14 @@ public class Hotels implements Serializable {
         this.description = description;
     }
    
+    public String getImagePath() {
+    return imagepath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagepath = imagePath;
+    }
+    
     public Collection<Rooms> getRoomsCollection() {
         return roomsCollection;
     }

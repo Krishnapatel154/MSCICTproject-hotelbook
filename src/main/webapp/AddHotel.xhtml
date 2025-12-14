@@ -143,14 +143,20 @@
                     <f:convertNumber type="number" minFractionDigits="0" maxFractionDigits="1"/>
                 </h:inputText>
             </div>
+           
+<!--            image-->
 
+             <div class="form-group">
+                <label>Image</label>
+                <h:inputTextarea value="#{adminCDIbean.imagepath}" rows="6"/>
+            </div>
             <!-- SUBMIT BUTTON -->
             <h:commandButton value="Save Hotel"
                              action="#{adminCDIbean.addHotel}"
                              styleClass="btn" />
 
      
-
+ 
         </div>
 
     </h:form>

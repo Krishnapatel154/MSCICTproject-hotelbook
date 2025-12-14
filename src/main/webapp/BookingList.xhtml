@@ -79,14 +79,14 @@
 
 <h:body>
 
-<div class="card">
+
 
     <div class="header-row">
-        <div class="title">My Bookings</div>
+        <div class="title">Bookings</div>
     </div>
 
     <h:form>
-        <h:dataTable value="#{myBookingBean.bookingList}"
+        <h:dataTable value="#{adminCDIbean.bookingList}"
                      var="b"
                      styleClass="booking-table">
 
@@ -97,7 +97,8 @@
 
             <h:column>
                 <f:facet name="header">Hotel</f:facet>
-                #{b.hotels.hotelName}
+                #{b.rooms.hotels.hotelName}
+
             </h:column>
 
             <h:column>
@@ -117,20 +118,35 @@
 
             <h:column>
                 <f:facet name="header">Status</f:facet>
-                <span class="status #{b.status}">
-                    #{b.status}
-                </span>
+
+                <h:selectOneMenu value="#{adminCDIbean.selectedStatus}">
+    <f:selectItem itemValue="Pending" itemLabel="Pending"/>
+    <f:selectItem itemValue="Confirmed" itemLabel="Confirmed"/>
+    <f:selectItem itemValue="Cancelled" itemLabel="Cancelled"/>
+</h:selectOneMenu>
+
+
+
             </h:column>
+
+            <!-- UPDATE BUTTON -->
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+<h:commandButton value="Update"
+     action="#{adminCDIbean.updateBookingStatus(b.bookingId)}"
+    styleClass="update-btn"/>
+            </h:column>
+
 
         </h:dataTable>
 
         <h:outputText value="No bookings found"
-                      rendered="#{empty myBookingBean.bookingList}"
+                      rendered="#{empty adminCDIbean.bookingList}"
                       style="display:block;text-align:center;margin-top:20px;" />
 
     </h:form>
 
-</div>
+
 
 </h:body>
 </html>

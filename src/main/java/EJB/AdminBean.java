@@ -37,18 +37,19 @@ public class AdminBean implements AdminBeanLocal {
     private Pbkdf2PasswordHash passwordHash;
 
     @Override
-    public void addHotel(String hotelName, String location, String city, Float rating, String description) {
+    public void addHotel(String hotelName, String location, String city, Float rating, String description,String imagepath) {
         Hotels h = new Hotels();
         h.setHotelName(hotelName);
         h.setLocation(location);
         h.setCity(city);
         h.setRating(rating);
         h.setDescription(description);
+        h.setImagePath(imagepath);
         em.persist(h);
     }
 
     @Override
-    public void updateHotel(Integer hotelId, String hotelName, String location, String city, Float rating, String description) {
+    public void updateHotel(Integer hotelId, String hotelName, String location, String city, Float rating, String description,String imagepath) {
         Hotels h = em.find(Hotels.class, hotelId);
         if (h == null) {
             throw new IllegalArgumentException("Invalid Hotel ID: " + hotelId);
@@ -58,6 +59,7 @@ public class AdminBean implements AdminBeanLocal {
         h.setCity(city);
         h.setRating(rating);
         h.setDescription(description);
+        h.setImagePath(imagepath);
         em.merge(h);
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -113,11 +115,12 @@ public class AdminBean implements AdminBeanLocal {
 
     //Room
     @Override
-    public void addRoom(Integer hotelId, String roomType, BigDecimal roomPrice, Boolean availability) {
+    public void addRoom(Integer hotelId, String roomType, BigDecimal roomPrice, Boolean availability,String roomimagepath) {
         Rooms r = new Rooms();
         r.setRoomType(roomType);
         r.setRoomPrice(roomPrice);
         r.setAvailability(availability);
+        r.setRoomimagepath(roomimagepath);
 
         if (hotelId != null) {
             Hotels h = em.find(Hotels.class, hotelId);
@@ -137,7 +140,7 @@ public class AdminBean implements AdminBeanLocal {
     }
 
     @Override
-    public void updateRoom(Integer roomId, Integer hotelId, String roomType, BigDecimal roomPrice, Boolean availability) {
+    public void updateRoom(Integer roomId, Integer hotelId, String roomType, BigDecimal roomPrice, Boolean availability,String roomimagepath) {
         Rooms r = em.find(Rooms.class, roomId);
         if (r == null) {
             throw new IllegalArgumentException("Invalid Room ID: " + roomId);
@@ -146,6 +149,7 @@ public class AdminBean implements AdminBeanLocal {
         r.setRoomType(roomType);
         r.setRoomPrice(roomPrice);
         r.setAvailability(availability);
+        r.setRoomimagepath(roomimagepath);
 
         if (hotelId != null) {
             Hotels h = em.find(Hotels.class, hotelId);

@@ -60,6 +60,8 @@ public class Rooms implements Serializable {
     private BigDecimal roomPrice;
     @Column(name = "availability")
     private Boolean availability;
+     @Column(name = "roomimage_path")
+    private String roomimagepath;
 
     @JsonbTransient
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "rooms")
@@ -116,6 +118,15 @@ public class Rooms implements Serializable {
     public void setAvailability(Boolean availability) {
         this.availability = availability;
     }
+
+    public String getRoomimagepath() {
+        return roomimagepath;
+    }
+
+    public void setRoomimagepath(String roomimagepath) {
+        this.roomimagepath = roomimagepath;
+    }
+   
 
     public Hotels getHotels() {
         return hotels;

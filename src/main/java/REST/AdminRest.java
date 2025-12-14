@@ -36,29 +36,32 @@ public class AdminRest {
        //Hotel api
        
     @POST                                                                                                                                                                               
-@Path("/add/{hotelName}/{location}/{city}/{rating}/{description}")
+@Path("/add/{hotelName}/{location}/{city}/{rating}/{description}/{imagepath}")
 public String addHotel(
     @PathParam("hotelName") String hotelName,
     @PathParam("location") String location,
     @PathParam("city") String city,
     @PathParam("rating") Float rating,
-    @PathParam("description") String description
+    @PathParam("description") String description,
+    @PathParam("imagepath") String imagepath    
 ) {
-    abl.addHotel(hotelName, location, city, rating, description);
+    abl.addHotel(hotelName, location, city, rating, description ,imagepath);
     return "Hotel Added Successfully";
 }
 
    @PUT
-    @Path("/update/{hotelId}/{hotelName}/{location}/{city}/{rating}/{description}")
+    @Path("/update/{hotelId}/{hotelName}/{location}/{city}/{rating}/{description}/{imagepath}")
     public String updateHotel(
             @PathParam("hotelId") Integer hotelId,
             @PathParam("hotelName") String hotelName,
             @PathParam("location") String location,
             @PathParam("city") String city,
             @PathParam("rating") Float rating,
-            @PathParam("description") String description) {
+            @PathParam("description") String description,
+            @PathParam("imagepath") String imagepath  )
+    {
 
-        abl.updateHotel(hotelId, hotelName, location, city, rating, description);
+        abl.updateHotel(hotelId, hotelName, location, city, rating, description,imagepath  );
         return "Hotel updated successfully";
     }
 
@@ -102,26 +105,30 @@ public Collection<Hotels> findHotelByLocation(@PathParam("location") String loca
 //room api
 
 @POST
-@Path("/addRoom/{hotelId}/{roomType}/{roomPrice}/{availability}")
+@Path("/addRoom/{hotelId}/{roomType}/{roomPrice}/{availability}/{roomimagepath}")
 public String addRoom(
         @PathParam("hotelId") Integer hotelId,
         @PathParam("roomType") String roomType,
         @PathParam("roomPrice") BigDecimal roomPrice,
-        @PathParam("availability") Boolean availability) {
+        @PathParam("availability") Boolean availability,
+        @PathParam("roomimagepath") String roomimagepath
 
-    abl.addRoom(hotelId, roomType, roomPrice, availability);
+) {
+
+    abl.addRoom(hotelId, roomType, roomPrice, availability,roomimagepath);
     return "Room added successfully";
 }
  @PUT
-@Path("/updateRoom/{roomId}/{hotelId}/{roomType}/{roomPrice}/{availability}")
+@Path("/updateRoom/{roomId}/{hotelId}/{roomType}/{roomPrice}/{availability}/{roomimagepath}")
 public String updateRoom(
         @PathParam("roomId") Integer roomId,
         @PathParam("hotelId") Integer hotelId,
         @PathParam("roomType") String roomType,
         @PathParam("roomPrice") BigDecimal roomPrice,
-        @PathParam("availability") Boolean availability) {
+        @PathParam("availability") Boolean availability,
+        @PathParam("roomimagepath") String roomimagepath) {
 
-    abl.updateRoom(roomId, hotelId, roomType, roomPrice, availability);
+    abl.updateRoom(roomId, hotelId, roomType, roomPrice, availability,roomimagepath);
     return "Room updated successfully";
 }
 

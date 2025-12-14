@@ -163,9 +163,9 @@
 
                 <div class="hotel-card">
 
-                    <img class="hotel-img"
-                         src="#{request.contextPath}/images/hero.jpg"
-                         alt="Hotel Image"/>
+                    <h:graphicImage 
+                    value="#{hotel.imagePath != null ? hotel.imagePath : 'images/default.jpg'}"
+                    style="width:100%; height:180px; object-fit:cover;" />
 
                     <div class="hotel-content">
 

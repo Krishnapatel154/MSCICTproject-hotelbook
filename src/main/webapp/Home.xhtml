@@ -252,12 +252,25 @@
     background: #f2f2f2;
 }
 
-/* Show menu on hover */
-.profile-wrapper:hover .profile-menu {
-    display: block;
-}
 
         </style>
+        <script>
+    function toggleProfileMenu() {
+        const menu = document.getElementById("profileMenu");
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    // click outside to close
+    document.addEventListener("click", function (event) {
+        const wrapper = document.getElementById("profileWrapper");
+        const menu = document.getElementById("profileMenu");
+
+        if (!wrapper.contains(event.target)) {
+            menu.style.display = "none";
+        }
+    });
+</script>
+
     </head>
 
     <body>
@@ -272,11 +285,10 @@
         <a href="Blog.jsf">Blog</a>
         <a href="Aboutus.jsf">About Us</a>
 
-        <!-- Logout Button Inline -->
-        <div class="profile-wrapper">
+       <div class="profile-wrapper" id="profileWrapper">
 
     <!-- Profile Button -->
-    <div class="profile-btn">
+    <div class="profile-btn" onclick="toggleProfileMenu()">
         <div class="profile-avatar">
             #{sessionScope.username.substring(0,1)}
         </div>
@@ -284,7 +296,7 @@
     </div>
 
     <!-- Dropdown Menu -->
-    <div class="profile-menu">
+    <div class="profile-menu" id="profileMenu">
         <a href="UserBookingList.jsf">My Bookings</a>
 
         <h:link outcome="Logout.jsf"
@@ -297,6 +309,7 @@
     </div>
 
 </div>
+
 
     </div>
 

@@ -124,6 +124,7 @@ public class AdminCDIbean implements Serializable {
     private String city;
     private Float rating;
     private String description;
+    private String imagepath;
 
     private Hotels selectedHotel;
 
@@ -174,6 +175,16 @@ public void setDescription(String description) {
     this.description = description;
 }
 
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
+
+
     public Hotels getSelectedHotel() {
         return selectedHotel;
     }
@@ -189,7 +200,8 @@ public void setDescription(String description) {
     
     public String addHotel() {
         try {
-            abl.addHotel(hotelName, location, city, rating, description);
+                abl.addHotel(hotelName, location, city, rating, description,imagepath);
+                hotels = null;
             return "AdminDashboard.jsf?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
@@ -226,6 +238,7 @@ public void setDescription(String description) {
             this.city = selectedHotel.getCity();
             this.rating = selectedHotel.getRating();
             this.description = selectedHotel.getDescription();
+            this.imagepath=selectedHotel.getImagePath();
         }
         return "EditHotel.jsf?faces-redirect=true";
     }
@@ -233,7 +246,7 @@ public void setDescription(String description) {
     // UPDATE
     public String updateHotel() {
         try {
-            abl.updateHotel(hotelId, hotelName, location, city, rating, description);
+            abl.updateHotel(hotelId, hotelName, location, city, rating, description,imagepath);
              hotels = null;
             return "AdminDashboard.jsf?faces-redirect=true";
         } catch (Exception e) {
@@ -246,7 +259,7 @@ public void setDescription(String description) {
     public String deleteHotel(Integer id) {
         try {
             abl.deleteHotel(id);
-            
+              hotels = null;
             return "AdminDashboard.jsf?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
@@ -260,6 +273,7 @@ private Integer roomhotelId;   // FIXED (HotelId → hotelId)
 private String roomType;
 private BigDecimal roomPrice;
 private Boolean availability;
+private String roomimagepath;
 
 public Integer getRoomHotelId() {
     return roomhotelId;
@@ -301,6 +315,14 @@ public void setAvailability(Boolean availability) {
     this.availability = availability;
 }
 
+    public String getRoomimagepath() {
+        return roomimagepath;
+    }
+
+    public void setRoomimagepath(String roomimagepath) {
+        this.roomimagepath = roomimagepath;
+    }
+
 private Rooms selectedRoom;
 
 public Rooms getSelectedRoom() {
@@ -315,7 +337,7 @@ public void setSelectedRoom(Rooms selectedRoom) {
 
 public String addRoom() {
     try {
-        abl.addRoom(roomhotelId, roomType, roomPrice, availability);   // FIXED
+        abl.addRoom(roomhotelId, roomType, roomPrice, availability,roomimagepath);   // FIXED
         rooms = null; // reload table
         return "AdminDashboard.jsf?faces-redirect=true";
     } catch (Exception e) {
@@ -349,6 +371,7 @@ public String loadRoomForEdit(Integer id) {
         this.roomType = selectedRoom.getRoomType();
         this.roomPrice = selectedRoom.getRoomPrice();
         this.availability = selectedRoom.getAvailability();
+         this.roomimagepath= selectedRoom.getRoomimagepath();   
     }
 
     return "EditRoom.jsf?faces-redirect=true";
@@ -358,7 +381,7 @@ public String loadRoomForEdit(Integer id) {
 
 public String updateRoom() {
     try {
-        abl.updateRoom(roomId, roomhotelId, roomType, roomPrice, availability);  // FIXED
+        abl.updateRoom(roomId, roomhotelId, roomType, roomPrice, availability,roomimagepath);  // FIXED
         rooms = null; // refresh list
         return "AdminDashboard.jsf?faces-redirect=true";
     } catch (Exception e) {
@@ -398,8 +421,29 @@ public String deleteRoom(Integer id) {
     }
 //booking
         
+        
         private Integer bookingId;
     private String status;
+   private Integer selectedBookingId;
+private String selectedStatus;
+
+public Integer getSelectedBookingId() {
+    return selectedBookingId;
+}
+
+public void setSelectedBookingId(Integer selectedBookingId) {
+    this.selectedBookingId = selectedBookingId;
+}
+
+public String getSelectedStatus() {
+    return selectedStatus;
+}
+
+public void setSelectedStatus(String selectedStatus) {
+    this.selectedStatus = selectedStatus;
+}
+
+
 
     // ---------- GET BOOKING LIST ----------
     public Collection<Booking> getBookingList() {
@@ -407,25 +451,31 @@ public String deleteRoom(Integer id) {
     }
 
     // ---------- UPDATE ONLY STATUS ----------
-    public String updateBookingStatus(Integer bookingId, String status) {
-        Booking b = abl.findBookingById(bookingId);
-        if (b != null) {
-            
-             java.util.Date uIn  = b.getCheckInDate();   // may be java.util.Date
-    java.util.Date uOut = b.getCheckOutDate();
+  public String updateBookingStatus(Integer bookingId) {
 
-    java.sql.Date sqlIn  = (uIn  != null) ? new java.sql.Date(uIn.getTime())  : null;
-    java.sql.Date sqlOut = (uOut != null) ? new java.sql.Date(uOut.getTime()) : null;
-            abl.updateBooking(b.getBookingId(), 
-                    b.getUsers().getUserId(),
-                    b.getRooms().getRoomId(),
-                sqlIn,
-        sqlOut,
-                    status
-            );
-        }
-        return "BookingList.jsf?faces-redirect=true";
-    } 
+    Booking b = abl.findBookingById(bookingId);
+
+    if (b != null) {
+
+        java.sql.Date sqlIn  = new java.sql.Date(b.getCheckInDate().getTime());
+        java.sql.Date sqlOut = new java.sql.Date(b.getCheckOutDate().getTime());
+
+        b.setStatus(selectedStatus);
+
+        abl.updateBooking(
+            b.getBookingId(),
+            b.getUsers().getUserId(),
+            b.getRooms().getRoomId(),
+            sqlIn,
+            sqlOut,
+            selectedStatus
+        );
+    }
+
+    return "AdminDashboard.jsf?faces-redirect=true";
+}
+ 
+ 
 
     // GETTERS SETTERS
     public Integer getBookingId() {

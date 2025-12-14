@@ -137,6 +137,12 @@
                 </div>
             </div>
 
+            <!--image-->
+            <div class="form-group">
+                <label>Room Image</label>
+                <h:inputText value="#{adminCDIbean.roomimagepath}" required="true">
+                </h:inputText>
+            </div>
             <!-- SUBMIT BUTTON -->
             <h:commandButton value="Save Room"
                              action="#{adminCDIbean.addRoom}"

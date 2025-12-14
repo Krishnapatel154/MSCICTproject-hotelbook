@@ -98,6 +98,11 @@
                          headerClass="room-header"
                          rowClasses="room-row">
 
+                   <h:column>
+                    <f:facet name="header">Hotel</f:facet>
+                        #{room.hotels.hotelName}
+                </h:column>
+                
                 <h:column>
                     <f:facet name="header">Room Type</f:facet>
                         #{room.roomType}
@@ -114,8 +119,8 @@
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">Hotel</f:facet>
-                        #{room.hotels.hotelName}
+                    <f:facet name="header">Room Image</f:facet>
+                        #{room.roomimagepath}
                 </h:column>
 
                 <!-- ACTION BUTTONS -->
